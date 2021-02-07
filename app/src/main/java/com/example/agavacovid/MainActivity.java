@@ -1,6 +1,7 @@
 package com.example.agavacovid;
 
 import android.os.Bundle;
+import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,7 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setItemBackgroundResource(R.drawable.background_selector);
+        this.getSupportActionBar().hide();
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

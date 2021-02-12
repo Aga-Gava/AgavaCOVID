@@ -13,6 +13,7 @@
     <color name="Fondo1">#7694B6</color>
     <color name="Texto1">#0eb6f3</color>
     <color name="Texto2">#c6fafb</color>
-
-
+    <color name="g1">#b5f4c1</color>
+    <color name="g2">#e7e7e8</color>
+    <color name="g3">#e9fced</color>
 </resources>

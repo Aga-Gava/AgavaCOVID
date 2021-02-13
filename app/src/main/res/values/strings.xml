@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">MISSVAAAANJIE</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Agava COVID</string>
+    <string name="title_principal">Principal</string>
+    <string name="title_info">Información</string>
+    <string name="title_ajustes">Ajustes de Idioma</string>
     <string name="button_send">Enviar diagnóstico</string>
     <string name="button_info_bajo">Riesgo bajo</string>
     <string name="button_info_medio">Riesgo medio</string>

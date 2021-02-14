@@ -7,4 +7,12 @@
     <string name="button_info_bajo">Riesgo bajo</string>
     <string name="button_info_medio">Riesgo medio</string>
     <string name="button_info_alto">Riesgo alto</string>
+    <string name="info_presentacion">"AgavaCovid es una app de rastreo de contactos. Su objetivo principal es permitir a sus usuarios  poder conocer forma rápida y sencilla si han podido tener un contacto con algún enfermo.
+        \nDesde AgavaCOVID le garantizamos que sus datos serán tratados de forma apropiada y consecuente con nuestro comprosmiso con la privacidad del usuario.
+        \nAgradecemos que haga uso de nuestra herramienta y por supuesto cuidese y cuide a los demás."</string>
+    <string name="title_presentacion">¿Quiénes somos?</string>
+    <string name="title_politica">\nPolítica de privacidad</string>
+    <string name="politica">baljlrhkrhkdvgakgikg</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

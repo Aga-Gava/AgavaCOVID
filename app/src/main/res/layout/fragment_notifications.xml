@@ -1,22 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.notifications.NotificationsFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.dashboard.DashboardFragment">
+
 
     <TextView
         android:id="@+id/text_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="394dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:text="Seleccione un idioma"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="445dp"
+        android:scrollbarFadeDuration="555">
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="286dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/language_selector"
+                android:button="@android:color/transparent"
+                android:drawableLeft="@drawable/es"
+                android:padding="20dp"
+                android:text="@string/spanish"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="286dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/language_selector"
+                android:button="@android:color/transparent"
+                android:drawableLeft="@drawable/uk"
+                android:padding="20dp"
+                android:text="@string/english"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="286dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/language_selector"
+                android:button="@android:color/transparent"
+                android:drawableLeft="@drawable/fr"
+                android:padding="20dp"
+                android:text="@string/french"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="286dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/language_selector"
+                android:button="@android:color/transparent"
+                android:drawableLeft="@drawable/pt"
+                android:padding="20dp"
+                android:text="@string/portuguese"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="286dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/language_selector"
+                android:button="@android:color/transparent"
+                android:drawableLeft="@drawable/de"
+                android:padding="20dp"
+                android:text="@string/german"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton6"
+                android:layout_width="286dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/language_selector"
+                android:button="@android:color/transparent"
+                android:drawableLeft="@drawable/it"
+                android:padding="20dp"
+                android:text="@string/italian"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButton7"
+                android:layout_width="286dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/language_selector"
+                android:button="@android:color/transparent"
+                android:drawableLeft="@drawable/ru"
+                android:padding="20dp"
+                android:text="@string/russian"
+                android:textAlignment="center"
+
+
+                />
+
+
+        </RadioGroup>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="237dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:text="Aceptar"
+        android:textColor="@color/black"
+        android:elevation="20dp"
+        android:textSize="24sp" />
+
+</LinearLayout>

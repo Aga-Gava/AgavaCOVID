@@ -14,7 +14,8 @@
     <string name="title_politica">\nPolítica de privacidad</string>
     <string name="politica">baljlrhkrhkdvgakgikg</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_envio">Comunica tu positivo</string>
+    <string name="hint_fecha">Selecciona una fecha</string>
     <string name="spanish">Español</string>
     <string name="english">English</string>
     <string name="french">Français</string>
@@ -22,7 +23,6 @@
     <string name="italian">Italiano</string>
     <string name="german">Deutsch</string>
     <string name="russian">Русский</string>
-
 
 
 </resources>

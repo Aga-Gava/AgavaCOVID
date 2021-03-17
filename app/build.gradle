@@ -18,6 +18,8 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "String", "REPORT_URL", "localhost:8080"
+            buildConfigField "String", "BUCKET_URL", ""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -38,6 +40,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'org.dpppt:dp3t-sdk-android:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

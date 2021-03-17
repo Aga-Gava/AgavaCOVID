@@ -11,11 +11,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.dpppt.android.sdk.BuildConfig;
+import org.dpppt.android.sdk.DP3T;
+import org.dpppt.android.sdk.models.ApplicationInfo;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DP3T.init(this.getBaseContext(), ApplicationInfo(BuildConfig.), signaturePublicKey);
         setContentView(R.layout.activity_main);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         BottomNavigationView navView = findViewById(R.id.nav_view);

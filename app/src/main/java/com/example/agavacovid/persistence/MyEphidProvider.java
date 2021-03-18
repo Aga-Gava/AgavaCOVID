@@ -49,6 +49,6 @@ public class MyEphidProvider extends ContentProvider {
         public static final String ID = BaseColumns._ID;
         public static final String KEY = "key";
         public static final String KEY_DATE = "key_date";
-        public static final String ALBUM_IMAGE_URI = "album_image_uri";
+
     }
 }

@@ -24,13 +24,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
         Log.d(TAG, "onCreate con SQL.");
 
-        String sql = String.format("CREATE TABLE %s" +
+        String sql = String.format("CREATE TABLE %s" +   //LOS MIOS
                         " (" +
-                        "  %s INT PRIMARY KEY" +
-                        ", %s TEXT" +
-                        ", %s TEXT" +
-                        ", %s TEXT" +  ///VAMOS POR AQUIIIIIIIIII AAAAAAAAAH
-                        ", %s TEXT" +
+                        "  %s INTEGER PRIMARY KEY AUTOINCREMENT" + //El ID de la tabla
+                        ", %s TEXT" +  // clave key
+                        ", %s TEXT" +   // keydate
+                        //ID lo metemos?
                         " )",
                 AgavaContract.MY_EPHID_TABLE,
                 MyEphidProvider.Column.ID,
@@ -38,49 +37,26 @@ public class DbHelper extends SQLiteOpenHelper {
                 MyEphidProvider.Column.KEY_DATE);
         db.execSQL(sql);
 
-        sql = String.format("CREATE TABLE %s" +
+        sql = String.format("CREATE TABLE %s" +    //LOS DE OTROS
                         " (" +
-                        "  %s INTEGER PRIMARY KEY AUTOINCREMENT" +
-                        ", %s TEXT" +
+                        "  %s INTEGER PRIMARY KEY AUTOINCREMENT" + //El ID de la tabla
+                        ", %s TEXT" + //id efimero recibido
+                        ", %s TEXT" + //fecha de recepcion del id externo
                         " )",
                 AgavaContract.EXTERNAL_EPHID_TABLE,
-                PlaylistProvider.Column.ID,
-                PlaylistProvider.Column.NAME);
-        db.execSQL(sql);
-
-        sql = String.format("CREATE TABLE %s" +
-                        " (" +
-                        "  %s INTEGER PRIMARY KEY AUTOINCREMENT" +
-                        ", %s INT" +
-                        ", %s INT" +
-                        ", UNIQUE (%s, %s)" +
-                        ", CONSTRAINT fk_playlist" +
-                        "    FOREIGN KEY (%s)" +
-                        "    REFERENCES %s(%s)" +
-                        "    ON DELETE CASCADE" +
-                        " )",
-                FullMusicContract.PLAYLIST_SONG_TABLE,
-                PlaylistSongProvider.Column.ID,
-                PlaylistSongProvider.Column.ID_PLAYLIST,
-                PlaylistSongProvider.Column.ID_SONG,
-                PlaylistSongProvider.Column.ID_PLAYLIST,
-                PlaylistSongProvider.Column.ID_SONG,
-                PlaylistSongProvider.Column.ID_PLAYLIST,
-                FullMusicContract.PLAYLIST_TABLE,
-                PlaylistProvider.Column.ID
-        );
+                ExternalEphidProvider.Column.ID,
+                ExternalEphidProvider.Column.EPHID,
+                ExternalEphidProvider.Column.RECEIVED_TIME);
         db.execSQL(sql);
     }
 
     // Llamado siempre que tengamos una nueva version
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Aqui irían las sentencias del tipo ALTER SONG_TABLE, de momento lo hacemos mas sencillo...
         // Borramos la vieja base de datos
         String dropTable = "DROP TABLE IF EXISTS ";
-        db.execSQL(dropTable + FullMusicContract.PLAYLIST_SONG_TABLE);
-        db.execSQL(dropTable + FullMusicContract.SONG_TABLE);
-        db.execSQL(dropTable + FullMusicContract.PLAYLIST_TABLE);
+        db.execSQL(dropTable + AgavaContract.MY_EPHID_TABLE);
+        db.execSQL(dropTable + AgavaContract.EXTERNAL_EPHID_TABLE);
         // Creamos una base de datos nueva
         onCreate(db);
         Log.d(TAG, "onUpgrade");

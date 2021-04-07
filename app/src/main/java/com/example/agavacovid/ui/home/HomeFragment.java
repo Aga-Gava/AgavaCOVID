@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Button info;
     private ImageButton buttonInfo;
     private ImageButton buttonEnvio;
+    private TextView textButtonEnvio;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,10 +37,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         buttonInfo = (ImageButton) view.findViewById(R.id.buttonInfo);
         buttonEnvio = (ImageButton) view.findViewById(R.id.buttonEnvio);
+        textButtonEnvio = (TextView) view.findViewById(R.id.textButtonEnvio);
 
         // Listeners
-        buttonInfo.setOnClickListener(this);
+        //buttonInfo.setOnClickListener(this);
         buttonEnvio.setOnClickListener(this);
+        textButtonEnvio.setOnClickListener(this);
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

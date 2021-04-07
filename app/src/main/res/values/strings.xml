@@ -23,6 +23,10 @@
     <string name="italian">Italiano</string>
     <string name="german">Deutsch</string>
     <string name="russian">Русский</string>
-
+    <string name="title_envio_fecha">Fecha de inicio de síntomas</string>
+    <string name="title_envio_fecha_info">"Introduzca la fecha de inicio de síntomas. si no has tenido síntomas, introduce la fecha de toma de muestra para el diagnóstico.
+        \nSi no conoces ninguna de estas dos fechas, déjalo en blanco."</string>
+    <string name="title_envio_codigo">Código de diagnóstico</string>
+    <string name="title_envio_codigo_info">Introduzca el código de diagnóstico que se le haya proporcionado.</string>
 
 </resources>

@@ -17,11 +17,14 @@ public class SendActivity extends AppCompatActivity  {
     private View vistaEnvio;
     private EditText fecha;
     private DatePickerDialog picker;
+    private static final long CATORCE_DIAS = 1209600000; //El numero del demonio son 14 dias en milisegundos T-T
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         vistaEnvio = (View) findViewById(R.id.vistaEnvio);
@@ -43,7 +46,7 @@ public class SendActivity extends AppCompatActivity  {
                             }
                         }, year, month, day);
                 picker.getDatePicker().setMaxDate(System.currentTimeMillis());
-                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1209600000); //El numero del demonio son 14 dias en milisegundos T-T
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - CATORCE_DIAS);
                 picker.show();
             }
         });

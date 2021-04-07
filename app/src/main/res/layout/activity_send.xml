@@ -8,19 +8,36 @@
     android:id="@+id/vistaEnvio"
     tools:context=".SendActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center" />
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="30dp"/>
 
     <TextView
         android:layout_width="373dp"
-        android:layout_height="74dp"
+        android:layout_height="84dp"
         android:layout_gravity="center"
         android:text="@string/title_envio"
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="373dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:text="@string/title_envio_fecha"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="373dp"
+        android:layout_height="134dp"
+        android:layout_gravity="center"
+        android:text="@string/title_envio_fecha_info"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="15dp"/>
     <EditText
         android:id="@+id/etPlannedDate"
         android:hint="@string/hint_fecha"
@@ -30,5 +47,56 @@
         android:focusable="false"
         android:clickable="true"
         android:maxLines="1" />
+
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:layout_width="373dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:text="@string/title_envio_codigo"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="373dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:text="@string/title_envio_codigo_info"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="15dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Código">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="10dp"/>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="237dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:text="Aceptar"
+        android:textColor="@color/black"
+        android:elevation="20dp"
+        android:textSize="24sp" />
+
+
 
 </LinearLayout>

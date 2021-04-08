@@ -16,4 +16,6 @@
     <color name="g1">#b5f4c1</color>
     <color name="g2">#e7e7e8</color>
     <color name="g3">#e9fced</color>
+    <color name="Aceptar">#b6f4c2</color>
+    <color name="Cancelar">#ee5656</color>
 </resources>

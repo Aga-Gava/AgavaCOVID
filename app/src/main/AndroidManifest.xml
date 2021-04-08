@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AgavaCOVID">
-        <activity android:name=".SendActivity" android:parentActivityName=".MainActivity">
-        </activity>
+        <activity android:name=".SendActivity" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".PopUp" android:parentActivityName=".PopUp" android:theme="@android:style/Theme.Dialog"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

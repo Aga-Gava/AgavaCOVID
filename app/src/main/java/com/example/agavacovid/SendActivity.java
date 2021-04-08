@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.Calendar;
 
@@ -16,6 +18,7 @@ public class SendActivity extends AppCompatActivity  {
 
     private View vistaEnvio;
     private EditText fecha;
+    private Button buttonConfirmacion;
     private DatePickerDialog picker;
     private static final long CATORCE_DIAS = 1209600000; //El numero del demonio son 14 dias en milisegundos T-T
 
@@ -29,6 +32,7 @@ public class SendActivity extends AppCompatActivity  {
 
         vistaEnvio = (View) findViewById(R.id.vistaEnvio);
         fecha = (EditText) vistaEnvio.findViewById(R.id.etPlannedDate);
+        buttonConfirmacion = (Button) vistaEnvio.findViewById(R.id.buttonConfirmacion);
 
         fecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +52,13 @@ public class SendActivity extends AppCompatActivity  {
                 picker.getDatePicker().setMaxDate(System.currentTimeMillis());
                 picker.getDatePicker().setMinDate(System.currentTimeMillis() - CATORCE_DIAS);
                 picker.show();
+            }
+        });
+
+        buttonConfirmacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SendActivity.this, PopUp.class));
             }
         });
     }

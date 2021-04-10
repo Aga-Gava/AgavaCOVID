@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonAceptar"
         android:layout_width="289dp"
         android:layout_height="80dp"
         android:layout_marginStart="4dp"
@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonCancelar"
         android:layout_width="289dp"
         android:layout_height="80dp"
         android:layout_marginStart="4dp"

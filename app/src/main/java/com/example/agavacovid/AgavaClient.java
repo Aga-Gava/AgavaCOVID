@@ -32,7 +32,7 @@ public class AgavaClient extends AgavaSocket {
 
 
 
-            cs.close();//Fin de la conexión
+            //cs.close();//Fin de la conexión
 
         }
         catch (Exception e){
@@ -43,7 +43,7 @@ public class AgavaClient extends AgavaSocket {
 
 
         MulticastSocket socket = new MulticastSocket(4446);
-        InetAddress group = InetAddress.getByName("224.84.33.27");
+        InetAddress group = InetAddress.getByName("224.0.0.251");
         socket.joinGroup(group);
 
         DatagramPacket packet;
@@ -56,8 +56,27 @@ public class AgavaClient extends AgavaSocket {
             System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbBBBBBBBBBBBBBBB");
             String received = new String(packet.getData());
             System.out.println("Quote of the Moment: " + received);
-        }
 
+///////////////////////////////////////////KILL//////////////////////////////////////////////
+            try{
+
+                //Flujo de datos hacia el servidor
+                salidaServidor = new DataOutputStream(cs.getOutputStream());
+                salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
+                        + " VALUES ('noivern', '2019-02-02', '2018-06-04')");
+                //Se enviarán dos mensajes
+
+
+            }
+            catch (Exception e){
+
+                System.out.println(e.getMessage());
+            }
+
+            ////////////////////////////////////KILL////////////////////////////////////////////////////
+
+        }
+        cs.close();
         socket.leaveGroup(group);
         socket.close();
 

@@ -1,6 +1,8 @@
 package com.example.agavacovid;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Window;
@@ -16,7 +18,8 @@ import androidx.navigation.ui.NavigationUI;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    BluetoothAdapter bluetoothAdapter;
+    int REQUEST_ENABLE_BLUETOOTH=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,18 @@ public class MainActivity extends AppCompatActivity {
         WifiManager.MulticastLock multicastLock = wifi.createMulticastLock("multicastLock");
         multicastLock.setReferenceCounted(true);
         multicastLock.acquire();
+
+
+
+        bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
+        if(!bluetoothAdapter.isEnabled())
+        {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent,REQUEST_ENABLE_BLUETOOTH);
+        }
+
+
+
 
     }
 

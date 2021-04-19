@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textTituloPopUp"
         android:layout_width="276dp"
         android:layout_height="99dp"
         android:layout_gravity="center"

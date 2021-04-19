@@ -11,6 +11,7 @@ import android.os.StrictMode;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,6 +23,7 @@ public class PopUp extends Activity {
 
     private Button buttonAceptar;
     private Button buttonCancelar;
+    private static TextView textTituloPopUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ public class PopUp extends Activity {
 
         buttonAceptar = (Button) findViewById(R.id.buttonAceptar);
         buttonCancelar = (Button) findViewById(R.id.buttonCancelar);
+        textTituloPopUp = (TextView) findViewById(R.id.textTituloPopUp);
 
 
 
@@ -78,5 +81,10 @@ public class PopUp extends Activity {
             }
         });
 
+
+
+    }
+    public static void escribeMogno(String s){
+        textTituloPopUp.setText(s);
     }
 }

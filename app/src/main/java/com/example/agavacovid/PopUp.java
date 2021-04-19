@@ -84,7 +84,4 @@ public class PopUp extends Activity {
 
 
     }
-    public static void escribeMogno(String s){
-        textTituloPopUp.setText(s);
-    }
 }

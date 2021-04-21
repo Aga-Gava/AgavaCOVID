@@ -16,11 +16,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.agavacovid.InfoActivity;
 import com.example.agavacovid.R;
 import com.example.agavacovid.SendActivity;
 
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment{
 
     private HomeViewModel homeViewModel;
     private Button info;
@@ -34,15 +35,47 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        int estado = 1; //0 es verde, 1 es amarillo, 2 es rojo
 
         buttonInfo = (ImageButton) view.findViewById(R.id.buttonInfo);
         buttonEnvio = (ImageButton) view.findViewById(R.id.buttonEnvio);
         textButtonEnvio = (TextView) view.findViewById(R.id.textButtonEnvio);
 
         // Listeners
-        //buttonInfo.setOnClickListener(this);
-        buttonEnvio.setOnClickListener(this);
-        textButtonEnvio.setOnClickListener(this);
+        buttonInfo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), InfoActivity.class);
+                Bundle b = new Bundle();
+
+                switch (estado){
+                    case(0):
+                        b.putInt("estado", 0);
+                        intent.putExtras(b);
+                        break;
+                    case(1):
+                        b.putInt("estado", 1);
+                        intent.putExtras(b);
+                        break;
+                    case(2):
+                        b.putInt("estado", 2);
+                        intent.putExtras(b);
+                        break;
+                }
+                startActivity(intent);
+            }
+        });
+        buttonEnvio.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SendActivity.class));
+
+            }
+        });
+        textButtonEnvio.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SendActivity.class));
+
+            }
+        });
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -51,12 +84,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
         return view;
     }
-
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(getActivity(), SendActivity.class));
-
-    }
-
 
 }

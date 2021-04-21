@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,18 +32,21 @@ public class MainActivity extends AppCompatActivity {
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             String action = intent.getAction();
 
-            // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // If it's already paired, skip it, because it's been listed already
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesMap.put(device.getAddress(), new Date());
-                }
-                // When discovery is finished, change the Activity title
+            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                //discovery starts, we can show progress dialog or perform other tasks
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                //discovery finishes, dismis progress dialog
+            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                //bluetooth device found
+                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                Toast.makeText(getApplicationContext(), "Found device "+ device.getName(), Toast.LENGTH_SHORT).show();
+                mNewDevicesMap.put(device.getAddress(), new Date());
             }
+
         }
     };
 
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -62,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
-
 
 
 
@@ -81,20 +85,41 @@ public class MainActivity extends AppCompatActivity {
 
 
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
-
-        if(!bluetoothAdapter.isEnabled()){
-            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,130);
-            startActivity(discoverableIntent);
-        }
-
         mNewDevicesMap = new HashMap<>();
 
-        while(bluetoothAdapter.isEnabled()) {
-            IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-            this.registerReceiver(mReceiver, filter);
 
-            bluetoothAdapter.startDiscovery();
+        if(!bluetoothAdapter.isEnabled()){
+
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,130);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
+
+
+        if (bluetoothAdapter.isDiscovering()) {
+            bluetoothAdapter.cancelDiscovery();
+        }
+
+
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+
+        registerReceiver(mReceiver, filter);
+
+        bluetoothAdapter.startDiscovery();
+
+        // Ver junticos de la mano con gente extranya de la Passion y tasar las cartas de PTCG de Gava
+
+
+        //if(!bluetoothAdapter.isDiscovering()) {
+            //IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+          //  this.registerReceiver(mReceiver, filter);
+
+            //bluetoothAdapter.startDiscovery();
+
+        //}
     }
 }

@@ -32,5 +32,18 @@
     <string name="title_envio_codigo_info">Introduzca el código de diagnóstico que se le haya proporcionado.</string>
     <string name="hint_codigo">Introduzca el código</string>
     <string name="dialog_confirmacion">¿Quiere confirmar el envío de su diagnóstico?</string>
+    <string name="infoverde">Estás bien sanote síiii :3</string>
+    <string name="infoamarillo">Escóndete en casitaaaa :0</string>
+    <string name="inforojo">Cuídate, te amamos chiii :D</string>
+
+    <string name="sincontactos">Sin contactos de riesgo identificados</string>
+    <string name="concontactos">Con contactos de riesgo identificados</string>
+    <string name="contagiado">Contagiado</string>
+
+    <string name="sincontactosplus">Te informaremos en caso de un posible contacto</string>
+    <string name="concontactosplus">Ten cuidadín</string>
+    <string name="contagiadoplus">Quédate quieto parao</string>
+
+    <string name="comunica">Comunica tu positivo</string>
 
 </resources>

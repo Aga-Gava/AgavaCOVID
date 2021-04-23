@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment{
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        int estado = 1; //0 es verde, 1 es amarillo, 2 es rojo
+        int estado = 2; //0 es verde, 1 es amarillo, 2 es rojo
 
         buttonInfo = (ImageButton) view.findViewById(R.id.buttonInfo);
         buttonEnvio = (ImageButton) view.findViewById(R.id.buttonEnvio);
@@ -48,15 +48,15 @@ public class HomeFragment extends Fragment{
                 Bundle b = new Bundle();
 
                 switch (estado){
-                    case(0):
+                    case 0:
                         b.putInt("estado", 0);
                         intent.putExtras(b);
                         break;
-                    case(1):
+                    case 1:
                         b.putInt("estado", 1);
                         intent.putExtras(b);
                         break;
-                    case(2):
+                    case 2:
                         b.putInt("estado", 2);
                         intent.putExtras(b);
                         break;

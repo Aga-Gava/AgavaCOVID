@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgavaCOVID">
         <activity android:name=".SendActivity" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".InfoActivity" android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".PopUp" android:parentActivityName=".SendActivity" android:theme="@android:style/Theme.Dialog"></activity>
         <activity
             android:name=".MainActivity"

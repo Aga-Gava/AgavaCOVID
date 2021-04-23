@@ -32,9 +32,18 @@
     <string name="title_envio_codigo_info">Introduzca el código de diagnóstico que se le haya proporcionado.</string>
     <string name="hint_codigo">Introduzca el código</string>
     <string name="dialog_confirmacion">¿Quiere confirmar el envío de su diagnóstico?</string>
-    <string name="infoverde">Estás bien sanote síiii :3</string>
-    <string name="infoamarillo">Escóndete en casitaaaa :0</string>
-    <string name="inforojo">Cuídate, te amamos chiii :D</string>
+    <string name="consejo1verde">Cúbrete la boca y la nariz con una mascarilla.</string>
+    <string name="consejo2verde">Mantén la distancia social.</string>
+    <string name="consejo3verde">Utiliza gel hidroalcohólico cuando sea necesario.</string>
+    <string name="mensajeverde">Estás bien sanote síiii :3</string>
+    <string name="consejo1amarillo">Procura salir solo para lo imprescindible.</string>
+    <string name="consejo2amarillo">Vigila el posible desarrollo de sintomas.</string>
+    <string name="consejo3amarillo">Comunica a tu centro salud tu estado.</string>
+    <string name="mensajeamarillo">Escóndete en casitaaaa :0</string>
+    <string name="consejo1rojo">Aíslate lo máximo posible</string>
+    <string name="consejo2rojo">Vigila la evolución de tus síntomas</string>
+    <string name="consejo3rojo">Llama a tu médico si empeoras</string>
+    <string name="mensajerojo">Cuídate, te amamos chiii :D</string>
 
     <string name="sincontactos">Sin contactos de riesgo identificados</string>
     <string name="concontactos">Con contactos de riesgo identificados</string>

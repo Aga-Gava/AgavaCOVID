@@ -100,7 +100,7 @@ public class PopUp extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width*.8), (int) (height*.55));
+        getWindow().setLayout((int) (width*.85), (int) (height*.65));
 
 
         buttonAceptar = (Button) findViewById(R.id.buttonAceptar);

@@ -28,6 +28,9 @@ public class HomeFragment extends Fragment{
     private ImageButton buttonInfo;
     private ImageButton buttonEnvio;
     private TextView textButtonEnvio;
+    private TextView textButtonInfo;
+    private TextView textButtonInfoPlus;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,8 +41,28 @@ public class HomeFragment extends Fragment{
         int estado = 2; //0 es verde, 1 es amarillo, 2 es rojo
 
         buttonInfo = (ImageButton) view.findViewById(R.id.buttonInfo);
+        textButtonInfo = (TextView) view.findViewById(R.id.textButtonInfo);
+        textButtonInfoPlus = (TextView) view.findViewById(R.id.textButtonInfoPlus);
         buttonEnvio = (ImageButton) view.findViewById(R.id.buttonEnvio);
         textButtonEnvio = (TextView) view.findViewById(R.id.textButtonEnvio);
+
+        switch (estado){
+            case 0:
+                buttonInfo.setImageResource(R.drawable.custom_button_info);
+                textButtonInfo.setText(R.string.sincontactos);
+                textButtonInfoPlus.setText(R.string.sincontactosplus);
+                break;
+            case 1:
+                buttonInfo.setImageResource(R.drawable.custom_button_info2);
+                textButtonInfo.setText(R.string.concontactos);
+                textButtonInfoPlus.setText(R.string.concontactosplus);
+                break;
+            case 2:
+                buttonInfo.setImageResource(R.drawable.custom_button_info3);
+                textButtonInfo.setText(R.string.contagiado);
+                textButtonInfoPlus.setText(R.string.contagiadoplus);
+                break;
+        }
 
         // Listeners
         buttonInfo.setOnClickListener(new View.OnClickListener() {

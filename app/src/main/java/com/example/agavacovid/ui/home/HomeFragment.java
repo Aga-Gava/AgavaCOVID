@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment{
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        int estado = 2; //0 es verde, 1 es amarillo, 2 es rojo
+        int estado = 1; //0 es verde, 1 es amarillo, 2 es rojo
 
         buttonInfo = (ImageButton) view.findViewById(R.id.buttonInfo);
         textButtonInfo = (TextView) view.findViewById(R.id.textButtonInfo);

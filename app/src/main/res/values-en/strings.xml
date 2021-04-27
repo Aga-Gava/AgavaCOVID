@@ -4,8 +4,8 @@
     <string name="title_info">Información</string>
     <string name="title_ajustes">Ajustes de Idioma</string>
     <string name="button_send">Enviar diagnóstico</string>
-    <string name="button_aceptar">Aceptar</string>
-    <string name="button_cancelar">Cancelar</string>
+    <string name="button_aceptar">Accept</string>
+    <string name="button_cancelar">Cancel</string>
     <string name="info_presentacion">"AgavaCovid es una app de rastreo de contactos. Su objetivo principal es permitir a sus usuarios  poder conocer de forma rápida y sencilla si han podido tener un contacto con algún enfermo.
         \nDesde AgavaCOVID le garantizamos que sus datos serán tratados de forma apropiada y consecuente con nuestro comprosmiso con la privacidad del usuario.
         \nAgradecemos que haga uso de nuestra herramienta y por supuesto cuídese y cuide a los demás."</string>

@@ -112,7 +112,7 @@ public class InfoActivity extends AppCompatActivity {
                 mensaje.setText(R.string.mensajeverde);
                 break;
             case 1:
-                imagen.setImageResource(R.drawable.medio);
+                imagen.setImageResource(R.drawable.agava_concontactos);
                 consejo1.setText(R.string.consejo1amarillo);
                 consejo2.setText(R.string.consejo2amarillo);
                 consejo3.setText(R.string.consejo3amarillo);

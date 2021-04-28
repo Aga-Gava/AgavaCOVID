@@ -1,5 +1,7 @@
 package com.example.agavacovid;
 
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,14 +23,22 @@ public class AgavaClient extends AgavaSocket {
 
             //Flujo de datos hacia el servidor
             salidaServidor = new DataOutputStream(cs.getOutputStream());
+
+
+            salidaServidor.writeUTF("2");
+
             salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
-                    + " VALUES ('cacnea', '2019-02-02', '2018-06-04')");
+                    + " VALUES ('bidoof', '2019-02-02', '2018-06-04')");
+
+            salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
+                    + " VALUES ('cacturne', '2019-02-02', '2018-06-04')");
+
             //Se enviarán dos mensajes
-            for (int i = 0; i < 2; i++)
+            /*for (int i = 0; i < 2; i++)
             {
-                //Se escribe en el servidor usando su flujo de datos
+
                 salidaServidor.writeUTF("Este es el mensaje número " + (i+1) + "\n");
-            }
+            }*/
 
 
 
@@ -53,17 +63,16 @@ public class AgavaClient extends AgavaSocket {
 
             socket.receive(packet);
 
-            System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbBBBBBBBBBBBBBBB");
             String received = new String(packet.getData());
-            System.out.println("Quote of the Moment: " + received);
 
 ///////////////////////////////////////////KILL//////////////////////////////////////////////
             try{
 
                 //Flujo de datos hacia el servidor
                 salidaServidor = new DataOutputStream(cs.getOutputStream());
+
                 salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
-                        + " VALUES ('noivern', '2019-02-02', '2018-06-04')");
+                        + " VALUES ('gengar', '2019-02-02', '2018-06-04')");
                 //Se enviarán dos mensajes
 
 
@@ -79,10 +88,5 @@ public class AgavaClient extends AgavaSocket {
         cs.close();
         socket.leaveGroup(group);
         socket.close();
-
-
-
-
-
     }
 }

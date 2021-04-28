@@ -18,6 +18,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +31,8 @@ import java.util.Map;
 public class InfoActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
-
+    private MulticastSocket socket;
+    private InetAddress group;
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -91,6 +97,27 @@ public class InfoActivity extends AppCompatActivity {
         bluetoothAdapter.startDiscovery();
 
 
+        try {
+            socket = new MulticastSocket(4446);
+            group = InetAddress.getByName("224.0.0.251");
+            socket.joinGroup(group);
+
+            DatagramPacket packet;
+            for (int i = 0; i < 5; i++) {
+                byte[] buf = new byte[256];
+                packet = new DatagramPacket(buf, buf.length);
+
+                socket.receive(packet);
+
+                String received = new String(packet.getData());
+                Toast.makeText(getApplicationContext(),
+                        "Has recibido un virus (∩^o^)⊃━☆", Toast.LENGTH_SHORT).show();
+            }
+            socket.leaveGroup(group);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        //
 
         Bundle b = getIntent().getExtras();
         int estado = 0; // or other values
@@ -119,7 +146,7 @@ public class InfoActivity extends AppCompatActivity {
                 mensaje.setText(R.string.mensajeamarillo);
                 break;
             case 2:
-                imagen.setImageResource(R.drawable.rojo);
+                imagen.setImageResource(R.drawable.agava_contagio);
                 consejo1.setText(R.string.consejo1rojo);
                 consejo2.setText(R.string.consejo2rojo);
                 consejo3.setText(R.string.consejo3rojo);
@@ -127,5 +154,15 @@ public class InfoActivity extends AppCompatActivity {
                 break;
 
         }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            socket.leaveGroup(group);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        socket.close();
     }
 }

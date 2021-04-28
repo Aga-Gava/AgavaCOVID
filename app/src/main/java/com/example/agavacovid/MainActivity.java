@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -19,6 +20,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,7 +36,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
-
+    private MulticastSocket socket;
+    private InetAddress group;
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -55,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -121,5 +129,47 @@ public class MainActivity extends AppCompatActivity {
             //bluetoothAdapter.startDiscovery();
 
         //}
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        try {
+            socket = new MulticastSocket(4446);
+            group = InetAddress.getByName("224.0.0.251");
+            socket.joinGroup(group);
+
+            DatagramPacket packet;
+            for (int i = 0; i < 5; i++){
+                byte[] buf = new byte[256];
+                packet = new DatagramPacket(buf, buf.length);
+
+                socket.receive(packet);
+
+                String received = new String(packet.getData());
+                //System.out.println("Quote of the Moment: " + received);
+
+                //tostada
+                Toast.makeText(getApplicationContext(),
+                        "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            socket.leaveGroup(group);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        socket.close();
     }
 }

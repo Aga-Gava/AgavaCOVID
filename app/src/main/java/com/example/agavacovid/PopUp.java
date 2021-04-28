@@ -123,13 +123,12 @@ public class PopUp extends Activity {
                     //System.out.println("Iniciando cliente\n");
                     cli.startClient(); //Se inicia el cliente
 
-                    System.out.println("Salgo :3");
+                    Toast.makeText(getApplicationContext(),
+                            "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
                 }catch (IOException e){
                     System.out.println(e);
                 }
 
-
-                System.out.println("Buenas noches tengan todos");
                 //startActivity(new Intent(PopUp.this, MainActivity.class));
 
             }

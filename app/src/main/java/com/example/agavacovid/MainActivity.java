@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     int REQUEST_ENABLE_BLUETOOTH=1;
     private MulticastSocket socket;
     private InetAddress group;
+    private MulticastListenerThread multicastListenerThread;
+    private boolean isListening = false;
+    private WifiManager.MulticastLock wifiLock;
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -84,13 +89,17 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-
+/*
         WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiManager.MulticastLock multicastLock = wifi.createMulticastLock("multicastLock");
         multicastLock.setReferenceCounted(true);
         multicastLock.acquire();
-
-
+*/
+        if (this.isListening) {
+            stopListening();
+        } else {
+            startListening();
+        }
 
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
         mNewDevicesMap = new HashMap<>();
@@ -161,15 +170,66 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
-        try {
-            socket.leaveGroup(group);
-        } catch (IOException e) {
-            e.printStackTrace();
+        stopListening();
+    }
+
+    private void startListening() {
+        if (!isListening) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+
+            if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+
+                    setWifiLockAcquired(true);
+
+                    this.multicastListenerThread = new MulticastListenerThread(this, "224.0.0.251"/*La IP del multicast*/, 4446 /*Puerto de recepcion*/);
+                    multicastListenerThread.start();
+
+                    isListening = true;
+
+            } else {
+                outputErrorToConsole("Error: You are not connected to a WiFi network!");
+            }
         }
-        socket.close();
+    }
+
+    void stopListening() {
+        if (isListening) {
+            isListening = false;
+
+            stopThreads();
+            setWifiLockAcquired(false);
+        }
+    }
+
+    private void setWifiLockAcquired(boolean acquired) {
+        if (acquired) {
+            if (wifiLock != null && wifiLock.isHeld())
+                wifiLock.release();
+
+            WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wifi != null) {
+                this.wifiLock = wifi.createMulticastLock("MulticastTester");
+                wifiLock.acquire();
+            }
+        } else {
+            if (wifiLock != null && wifiLock.isHeld())
+                wifiLock.release();
+        }
+    }
+
+    private void stopThreads() {
+        if (this.multicastListenerThread != null)
+            this.multicastListenerThread.stopRunning();
+    }
+
+    public void outputErrorToConsole(String errorMessage) {
+        outputTextToConsole(errorMessage);
+    }
+
+    public void outputTextToConsole(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

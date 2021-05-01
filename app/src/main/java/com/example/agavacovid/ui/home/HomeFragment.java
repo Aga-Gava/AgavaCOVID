@@ -1,5 +1,7 @@
 package com.example.agavacovid.ui.home;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +24,10 @@ import com.example.agavacovid.InfoActivity;
 import com.example.agavacovid.R;
 import com.example.agavacovid.SendActivity;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class HomeFragment extends Fragment{
 
@@ -30,6 +38,7 @@ public class HomeFragment extends Fragment{
     private TextView textButtonEnvio;
     private TextView textButtonInfo;
     private TextView textButtonInfoPlus;
+    private ImageView agava;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,6 +49,7 @@ public class HomeFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         int estado = 1; //0 es verde, 1 es amarillo, 2 es rojo
 
+        agava = (ImageView) view.findViewById(R.id.imageAgava);
         buttonInfo = (ImageButton) view.findViewById(R.id.buttonInfo);
         textButtonInfo = (TextView) view.findViewById(R.id.textButtonInfo);
         textButtonInfoPlus = (TextView) view.findViewById(R.id.textButtonInfoPlus);
@@ -63,8 +73,29 @@ public class HomeFragment extends Fragment{
                 textButtonInfoPlus.setText(R.string.contagiadoplus);
                 break;
         }
-
         // Listeners
+
+        agava.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Map<String, Date> mNewDevicesMap = new HashMap<>();
+
+                while(bluetoothAdapter.isDiscovering()){
+                    if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                        //bluetooth device found
+                        BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                        Toast.makeText(getApplicationContext(), "Found device " + device.getName(), Toast.LENGTH_SHORT).show();
+                        mNewDevicesMap.put(device.getAddress(), new Date());
+                    }
+                }
+                //envia cuando este discoverable
+
+            }
+        }
+        );
+
+
+
         buttonInfo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InfoActivity.class);

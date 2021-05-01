@@ -8,7 +8,7 @@ import java.io.OutputStream;
 
 
 public class SendReceive extends Thread
-{/*
+{
     private final BluetoothSocket bluetoothSocket;
     private final InputStream inputStream;
     private final OutputStream outputStream;
@@ -32,7 +32,7 @@ public class SendReceive extends Thread
 
     public void run()
     {
-        byte[] buffer=new byte[1024];
+        byte[] buffer=new byte[1024]; //poner del tamaño de ids
         int bytes;
 
         while (true)
@@ -53,7 +53,7 @@ public class SendReceive extends Thread
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } */
+    }
 }
 
 

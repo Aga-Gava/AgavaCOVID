@@ -88,7 +88,7 @@
         app:layout_constraintVertical_bias="0.85" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageAgava"
         android:layout_width="309dp"
         android:layout_height="133dp"
         android:src="@drawable/titulo"

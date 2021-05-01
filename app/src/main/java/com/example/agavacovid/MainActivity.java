@@ -43,29 +43,23 @@ public class MainActivity extends AppCompatActivity {
     private MulticastListenerThread multicastListenerThread;
     private boolean isListening = false;
     private WifiManager.MulticastLock wifiLock;
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             String action = intent.getAction();
 
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+           /* if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 //discovery starts, we can show progress dialog or perform other tasks
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 //discovery finishes, dismis progress dialog
-            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                //bluetooth device found
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                Toast.makeText(getApplicationContext(), "Found device "+ device.getName(), Toast.LENGTH_SHORT).show();
-                mNewDevicesMap.put(device.getAddress(), new Date());
-            }
+            } else*/
 
         }
     };
 
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
-    private Map<String, Date> mNewDevicesMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,72 +96,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
-        mNewDevicesMap = new HashMap<>();
 
 
         if(!bluetoothAdapter.isEnabled()){
 
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,130);
+            enableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,60);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
 
-
+// es pa que cuando entres en otra actividad no se ponga a hacer discoveries ahi chungos a la vez y pete
         if (bluetoothAdapter.isDiscovering()) {
             bluetoothAdapter.cancelDiscovery();
         }
 
+        bluetoothAdapter.startDiscovery();
 
         IntentFilter filter = new IntentFilter();
 
         filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 
         registerReceiver(mReceiver, filter);
 
-        bluetoothAdapter.startDiscovery();
-
         // Ver junticos de la mano con gente extranya de la Passion y tasar las cartas de PTCG de Gava
 
-
-        //if(!bluetoothAdapter.isDiscovering()) {
-            //IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-          //  this.registerReceiver(mReceiver, filter);
-
-            //bluetoothAdapter.startDiscovery();
-
-        //}
-
-    }
-    @Override
-    protected void onResume(){
-        super.onResume();
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        try {
-            socket = new MulticastSocket(4446);
-            group = InetAddress.getByName("224.0.0.251");
-            socket.joinGroup(group);
-
-            DatagramPacket packet;
-            for (int i = 0; i < 5; i++){
-                byte[] buf = new byte[256];
-                packet = new DatagramPacket(buf, buf.length);
-
-                socket.receive(packet);
-
-                String received = new String(packet.getData());
-                //System.out.println("Quote of the Moment: " + received);
-
-                //tostada
-                Toast.makeText(getApplicationContext(),
-                        "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
-            }
-
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

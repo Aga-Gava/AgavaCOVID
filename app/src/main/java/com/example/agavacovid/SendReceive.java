@@ -1,6 +1,8 @@
 package com.example.agavacovid;
 
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,12 +14,14 @@ public class SendReceive extends Thread
     private final BluetoothSocket bluetoothSocket;
     private final InputStream inputStream;
     private final OutputStream outputStream;
+    private Context context;
 
-    public SendReceive (BluetoothSocket socket)
+    public SendReceive (BluetoothSocket socket, Context context)
     {
         bluetoothSocket=socket;
         InputStream tempIn=null;
         OutputStream tempOut=null;
+        this.context = context;
 
         try {
             tempIn=bluetoothSocket.getInputStream();
@@ -38,8 +42,10 @@ public class SendReceive extends Thread
         while (true)
         {
             try {
-                bytes=inputStream.read(buffer);
-                handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
+                bytes = inputStream.read(buffer);
+                String tempMsg=new String(buffer,0, bytes);
+                Toast.makeText(context,tempMsg, Toast.LENGTH_LONG).show();
+                //CREAR LA QUERY CON LOS DATOS RECIBIDOS E INSERTAR
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -49,6 +55,7 @@ public class SendReceive extends Thread
     public void write(byte[] bytes)
     {
         try {
+            // ACCESO A BASE DE DATOS Y PASAMOS UNICAMNETE LOS DATOS. LA CONSULTA SE CREA AL RECIBIR
             outputStream.write(bytes);
         } catch (IOException e) {
             e.printStackTrace();

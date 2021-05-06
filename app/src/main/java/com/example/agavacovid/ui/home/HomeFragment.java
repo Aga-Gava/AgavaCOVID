@@ -29,6 +29,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.agavacovid.ClientBTClass;
 import com.example.agavacovid.InfoActivity;
+import com.example.agavacovid.MyBroadcastReceiver;
 import com.example.agavacovid.R;
 import com.example.agavacovid.SendActivity;
 import com.example.agavacovid.ServerBTClass;
@@ -51,7 +52,9 @@ public class HomeFragment extends Fragment{
     private TextView textButtonInfo;
     private TextView textButtonInfoPlus;
     private ImageView agava;
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private final MyBroadcastReceiver br = new MyBroadcastReceiver(getContext());
+
+    /*private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -94,10 +97,10 @@ public class HomeFragment extends Fragment{
                 //discovery starts, we can show progress dialog or perform other tasks
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 //discovery finishes, dismis progress dialog
-            } else*/
+            } else comentarion de cerrar
 
         }
-    };
+    };*/
 
     private BluetoothAdapter bluetoothAdapter;
     private Map<String, Date> mNewDevicesMap;
@@ -141,7 +144,7 @@ public class HomeFragment extends Fragment{
             public void onClick(View v) {
                 mNewDevicesMap = new HashMap<>();
                 bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
-               // bluetoothAdapter.startDiscovery();
+                bluetoothAdapter.startDiscovery();
 
                 Toast.makeText(getContext(),
                         "Holaaaaa"+ bluetoothAdapter.isDiscovering(), Toast.LENGTH_SHORT).show();
@@ -152,7 +155,7 @@ public class HomeFragment extends Fragment{
                 //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
                 //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 
-                getActivity().registerReceiver(mReceiver, filter);
+                getActivity().registerReceiver(br, filter);
                 Toast.makeText(getContext(),
                         "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
                 //envia cuando este discoverable

@@ -106,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
 // es pa que cuando entres en otra actividad no se ponga a hacer discoveries ahi chungos a la vez y pete
-        if (bluetoothAdapter.isDiscovering()) {
-            bluetoothAdapter.cancelDiscovery();
-        }
+       // if (bluetoothAdapter.isDiscovering()) {
+        ///    bluetoothAdapter.cancelDiscovery();
+        //}
 
-        bluetoothAdapter.startDiscovery();
+        //bluetoothAdapter.startDiscovery();
 
 
 

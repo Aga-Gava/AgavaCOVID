@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         if(!bluetoothAdapter.isEnabled()){
 
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            enableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,60);
+            //enableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,60);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
 
@@ -112,13 +112,15 @@ public class MainActivity extends AppCompatActivity {
 
         bluetoothAdapter.startDiscovery();
 
-        IntentFilter filter = new IntentFilter();
 
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
+
+        //IntentFilter filter = new IntentFilter();
+
+        //filter.addAction(BluetoothDevice.ACTION_FOUND);
         //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 
-        registerReceiver(mReceiver, filter);
+        //registerReceiver(mReceiver, filter);
 
         // Ver junticos de la mano con gente extranya de la Passion y tasar las cartas de PTCG de Gava
 

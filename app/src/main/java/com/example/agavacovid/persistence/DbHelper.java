@@ -27,14 +27,16 @@ public class DbHelper extends SQLiteOpenHelper {
         String sql = String.format("CREATE TABLE %s" +   //LOS MIOS
                         " (" +
                         "  %s INTEGER PRIMARY KEY AUTOINCREMENT" + //El ID de la tabla
+                        ", %s TEXT" +  // Id efimero
                         ", %s TEXT" +  // clave key
                         ", %s TEXT" +   // keydate
                         //ID lo metemos?
                         " )",
-                AgavaContract.MY_EPHID_TABLE,
-                MyEphidProvider.Column.ID,
-                MyEphidProvider.Column.KEY,
-                MyEphidProvider.Column.KEY_DATE);
+                AgavaContract.IDS_PROPIOS_TABLA,
+                AgavaContract.IdsPropios.ID,
+                AgavaContract.IdsPropios.ID_EF,
+                AgavaContract.IdsPropios.CLAVE,
+                AgavaContract.IdsPropios.FECHA_GEN);
         db.execSQL(sql);
 
         sql = String.format("CREATE TABLE %s" +    //LOS DE OTROS
@@ -43,10 +45,10 @@ public class DbHelper extends SQLiteOpenHelper {
                         ", %s TEXT" + //id efimero recibido
                         ", %s TEXT" + //fecha de recepcion del id externo
                         " )",
-                AgavaContract.EXTERNAL_EPHID_TABLE,
-                ExternalEphidProvider.Column.ID,
-                ExternalEphidProvider.Column.EPHID,
-                ExternalEphidProvider.Column.RECEIVED_TIME);
+                AgavaContract.IDS_AJENOS_TABLA,
+                AgavaContract.IdsAjenos.ID,
+                AgavaContract.IdsAjenos.ID_EF,
+                AgavaContract.IdsAjenos.FECHA_REC);
         db.execSQL(sql);
     }
 
@@ -55,8 +57,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Borramos la vieja base de datos
         String dropTable = "DROP TABLE IF EXISTS ";
-        db.execSQL(dropTable + AgavaContract.MY_EPHID_TABLE);
-        db.execSQL(dropTable + AgavaContract.EXTERNAL_EPHID_TABLE);
+        db.execSQL(dropTable + AgavaContract.IDS_PROPIOS_TABLA);
+        db.execSQL(dropTable + AgavaContract.IDS_AJENOS_TABLA);
         // Creamos una base de datos nueva
         onCreate(db);
         Log.d(TAG, "onUpgrade");

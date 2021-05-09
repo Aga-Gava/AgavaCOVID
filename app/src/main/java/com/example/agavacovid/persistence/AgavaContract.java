@@ -10,7 +10,6 @@ public class AgavaContract {
 
     public static class IdsPropios implements BaseColumns {
 
-        public static final String ID = BaseColumns._ID;
         public static final String ID_EF = "identificador_ef";
         public static final String CLAVE = "clave_gen";
         public static final String FECHA_GEN = "fecha_gen";
@@ -18,7 +17,6 @@ public class AgavaContract {
 
     public static class IdsAjenos implements BaseColumns {
 
-        public static final String ID = BaseColumns._ID;
         public static final String ID_EF = "identificador_ef";
         public static final String FECHA_REC = "fecha_rec";
     }

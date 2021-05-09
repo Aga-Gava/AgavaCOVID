@@ -33,7 +33,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         //ID lo metemos?
                         " )",
                 AgavaContract.IDS_PROPIOS_TABLA,
-                AgavaContract.IdsPropios.ID,
+                AgavaContract.IdsPropios._ID,
                 AgavaContract.IdsPropios.ID_EF,
                 AgavaContract.IdsPropios.CLAVE,
                 AgavaContract.IdsPropios.FECHA_GEN);
@@ -46,7 +46,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         ", %s TEXT" + //fecha de recepcion del id externo
                         " )",
                 AgavaContract.IDS_AJENOS_TABLA,
-                AgavaContract.IdsAjenos.ID,
+                AgavaContract.IdsAjenos._ID,
                 AgavaContract.IdsAjenos.ID_EF,
                 AgavaContract.IdsAjenos.FECHA_REC);
         db.execSQL(sql);
@@ -55,7 +55,7 @@ public class DbHelper extends SQLiteOpenHelper {
     // Llamado siempre que tengamos una nueva version
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Borramos la vieja base de datos
+        // Borramos la base de datos antigua
         String dropTable = "DROP TABLE IF EXISTS ";
         db.execSQL(dropTable + AgavaContract.IDS_PROPIOS_TABLA);
         db.execSQL(dropTable + AgavaContract.IDS_AJENOS_TABLA);

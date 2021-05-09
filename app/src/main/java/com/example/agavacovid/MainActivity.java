@@ -6,14 +6,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.BaseColumns;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.agavacovid.persistence.AgavaContract;
+import com.example.agavacovid.persistence.DbHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private ArrayAdapter<String> mPairedDevicesArrayAdapter;
+    //private ArrayAdapter<String> mPairedDevicesArrayAdapter;
+    private DbHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         multicastLock.setReferenceCounted(true);
         multicastLock.acquire();
 */
+        dbHelper= new DbHelper(getApplicationContext());
+
+
         if (this.isListening) {
             stopListening();
         } else {
@@ -146,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                     isListening = true;
 
             } else {
-                outputErrorToConsole("Error: You are not connected to a WiFi network!");
+                outputErrorToConsole("Error: ¡No estás conectado a una red WiFi!");
             }
         }
     }
@@ -188,4 +198,19 @@ public class MainActivity extends AppCompatActivity {
     public void outputTextToConsole(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+    public void comprobarIDsContagiados(String listaIDs){
+        // crear la lista de IDs separando usando unas comas o algo bonico. Tambien puede ser "aga"
+        db= dbHelper.getReadableDatabase();
+        String[] projection = {
+                BaseColumns._ID,
+                AgavaContract.IdsAjenos.ID_EF,
+                AgavaContract.IdsAjenos.FECHA_REC,
+        };
+
+        String selection = " * ";
+        Cursor cursor = db.query(AgavaContract.IDS_AJENOS_TABLA, projection, where, selectionArgs, null, null,
+                orderBy);
+    }
+
 }

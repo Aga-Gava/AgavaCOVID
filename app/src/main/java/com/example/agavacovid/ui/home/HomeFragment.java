@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 
 public class HomeFragment extends Fragment{
@@ -143,7 +144,7 @@ public class HomeFragment extends Fragment{
         agava.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 mNewDevicesMap = new HashMap<>();
-                bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
+               /* bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
                 bluetoothAdapter.startDiscovery();
 
                 Toast.makeText(getContext(),
@@ -158,7 +159,17 @@ public class HomeFragment extends Fragment{
                 getActivity().registerReceiver(br, filter);
                 Toast.makeText(getContext(),
                         "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
-                //envia cuando este discoverable
+                //envia cuando este discoverable*/
+                bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
+                Set<BluetoothDevice> bt=bluetoothAdapter.getBondedDevices();
+                ServerBTClass serverBTClass = new ServerBTClass(getContext());
+                serverBTClass.start();
+
+                for(BluetoothDevice b: bt){
+
+                    ClientBTClass clientBTClass = new ClientBTClass(b, getContext());
+                    clientBTClass.start();
+                }
 
             }
         }

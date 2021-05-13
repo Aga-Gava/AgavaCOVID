@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Message;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -26,14 +27,22 @@ public class ClientBTClass extends Thread {
 
         try {
             socket = device.createRfcommSocketToServiceRecord(MY_UUID);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void run() {
+    @Override
+    public void run()
+    {
+        super.run();
+        Toast.makeText(context,
+                "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ", Toast.LENGTH_SHORT).show();
         try {
             socket.connect();
+            Toast.makeText(context,
+                    "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ " + socket, Toast.LENGTH_SHORT).show();
             sendReceive = new SendReceive(socket,context);
             sendReceive.start();
             sendReceive.write("CACNEA".getBytes());
@@ -41,6 +50,7 @@ public class ClientBTClass extends Thread {
 
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 }

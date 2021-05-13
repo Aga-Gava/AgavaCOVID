@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -19,21 +20,33 @@ public class ServerBTClass extends Thread{
         try {
             serverSocket= BluetoothAdapter.getDefaultAdapter().listenUsingRfcommWithServiceRecord(APP_NAME, MY_UUID);
             this.context = context;
+            Toast.makeText(context,
+                    "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ " + serverSocket, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(context,
+                    "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ", Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
     public void run()
     {
+        super.run();
+
         BluetoothSocket socket=null;
         //SendReceive
         while (socket==null)
         {
             try {
                 socket=serverSocket.accept();
+
+                Toast.makeText(context,
+                        "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ " + socket, Toast.LENGTH_SHORT).show();
+
             } catch (IOException e) {
                 e.printStackTrace();
+
 
             }
 

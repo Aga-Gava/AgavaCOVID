@@ -10,6 +10,7 @@ import android.util.ArrayMap;
 import android.widget.Toast;
 
 import com.example.agavacovid.persistence.AgavaContract;
+import com.example.agavacovid.persistence.DbHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,8 +53,10 @@ public class SendReceive extends Thread
         outputStream=tempOut;
     }
 
+    @Override
     public void run()
     {
+        super.run();
         byte[] buffer=new byte[1024]; //poner del tamaño de ids
         int bytes;
 
@@ -64,6 +67,7 @@ public class SendReceive extends Thread
                 Date fecha_rec = new Date();
                 String tempMsg=new String(buffer,0, bytes);
                 Toast.makeText(context,tempMsg, Toast.LENGTH_LONG).show();
+                DbHelper dbHelper = new DbHelper(context);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
 
@@ -87,6 +91,7 @@ public class SendReceive extends Thread
     {
         try {
             // ACCESO A BASE DE DATOS Y PASAMOS UNICAMNETE LOS DATOS. LA CONSULTA SE CREA AL RECIBIR
+            DbHelper dbHelper = new DbHelper(context);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
             String[] projection = {
@@ -129,7 +134,7 @@ public class SendReceive extends Thread
                     return o1.compareTo(o2);
                 } //esta ordenada parriba o pabajo? :D
             });
-            //me hago pis
+
             cursor.close();
         // Divides el dia en 96 cachos, los 96 cuartos de hora, Cada cacho lo asignas a su rango, dependiendo de en que rango caiga coges el que cae en rango y coja la cota inferior para seleccionar la fecha.
         //Esto de arriba iwal no hace falta porque la fecha gen ya es la mayor y se van sacando los chunks cada 15 min (en el final) aunque se generen todos a las 00:00 en el array gordo

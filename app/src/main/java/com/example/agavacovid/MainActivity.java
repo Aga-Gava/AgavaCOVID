@@ -3,6 +3,7 @@ package com.example.agavacovid;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -35,8 +36,10 @@ import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -97,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
         multicastLock.acquire();
 */
         dbHelper= new DbHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.clear();
+        values.put(AgavaContract.IdsPropios.ID_EF, "CACNEA");
+        values.put(AgavaContract.IdsAjenos.FECHA_REC, new Date().toString());
+        db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
 
 
         if (this.isListening) {
@@ -208,9 +218,16 @@ public class MainActivity extends AppCompatActivity {
                 AgavaContract.IdsAjenos.FECHA_REC,
         };
 
-        String selection = " * ";
-        Cursor cursor = db.query(AgavaContract.IDS_AJENOS_TABLA, projection, where, selectionArgs, null, null,
-                orderBy);
+        Cursor cursor = db.query(AgavaContract.IDS_AJENOS_TABLA, projection,
+                null, null, null, null, null);
+        List<String> listaIdsAjenosBD = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            String idEf = cursor.getString(
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.ID_EF));
+            listaIdsAjenosBD.add(idEf);
+        }
+
+        cursor.close();
     }
 
 }

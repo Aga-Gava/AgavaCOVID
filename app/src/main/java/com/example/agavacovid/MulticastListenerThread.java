@@ -35,7 +35,7 @@ public class MulticastListenerThread extends MulticastThread {
             //
             final String consoleMessage = "[" + ((getLocalIP().equals(packet.getAddress().getHostAddress())) ? "You" : packet.getAddress().getHostAddress()) + "] " + data + "\n";
 
-            this.getHandler().post(() -> getActivity().comprobarIDsContagiados(data));
+            //this.getHandler().post(() -> getActivity().comprobarIDsContagiados(data));
             this.getHandler().post(() -> getActivity().outputTextToConsole(consoleMessage));
         }
         if (multicastSocket != null)

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.provider.BaseColumns;
 import android.util.ArrayMap;
 import android.widget.Toast;
@@ -34,13 +35,20 @@ public class SendReceive extends Thread
     private final InputStream inputStream;
     private final OutputStream outputStream;
     private Context context;
+    private Handler handler;
+    static final int STATE_LISTENING = 1;
+    static final int STATE_CONNECTING=2;
+    static final int STATE_CONNECTED=3;
+    static final int STATE_CONNECTION_FAILED=4;
+    static final int STATE_MESSAGE_RECEIVED=5;
 
-    public SendReceive (BluetoothSocket socket, Context context)
+    public SendReceive (BluetoothSocket socket, Context context, Handler handler)
     {
         bluetoothSocket=socket;
         InputStream tempIn=null;
         OutputStream tempOut=null;
         this.context = context;
+        this.handler = handler;
 
         try {
             tempIn=bluetoothSocket.getInputStream();
@@ -64,9 +72,12 @@ public class SendReceive extends Thread
         {
             try {
                 bytes = inputStream.read(buffer);
+                handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
                 Date fecha_rec = new Date();
                 String tempMsg=new String(buffer,0, bytes);
+
                 Toast.makeText(context,tempMsg, Toast.LENGTH_LONG).show();
+
                 DbHelper dbHelper = new DbHelper(context);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
@@ -83,6 +94,8 @@ public class SendReceive extends Thread
                 //CREAR LA QUERY CON LOS DATOS RECIBIDOS E INSERTAR
             } catch (IOException e) {
                 e.printStackTrace();
+                Toast.makeText(context, "Error en el sendreceive bien feo", Toast.LENGTH_LONG).show();
+
             }
         }
     }

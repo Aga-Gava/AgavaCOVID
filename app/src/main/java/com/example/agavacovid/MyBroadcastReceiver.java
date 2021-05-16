@@ -54,12 +54,12 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
                 //!!!!!COMPROBAR QUE EL DEVICE SE MANTIENE CUNADO CANCELAMOS DISCOVERY
 
-                ServerBTClass serverClass=new ServerBTClass(context);
+                /*ServerBTClass serverClass=new ServerBTClass(context, handler);
                 serverClass.start();
 
-                ClientBTClass clientClass=new ClientBTClass(device, context);
+                ClientBTClass clientClass=new ClientBTClass(device, context, handler);
                 clientClass.start();
-
+                    */
                 //insercion de base de datos
             }
         }

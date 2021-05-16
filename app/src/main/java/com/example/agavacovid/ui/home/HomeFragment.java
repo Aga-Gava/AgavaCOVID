@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,7 @@ public class HomeFragment extends Fragment{
     private TextView textButtonInfo;
     private TextView textButtonInfoPlus;
     private ImageView agava;
+
     private final MyBroadcastReceiver br = new MyBroadcastReceiver(getContext());
 
     /*private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -106,6 +109,11 @@ public class HomeFragment extends Fragment{
     private BluetoothAdapter bluetoothAdapter;
     private Map<String, Date> mNewDevicesMap;
 
+    static final int STATE_LISTENING = 1;
+    static final int STATE_CONNECTING=2;
+    static final int STATE_CONNECTED=3;
+    static final int STATE_CONNECTION_FAILED=4;
+    static final int STATE_MESSAGE_RECEIVED=5;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -144,6 +152,40 @@ public class HomeFragment extends Fragment{
         agava.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 mNewDevicesMap = new HashMap<>();
+
+                Handler handler=new Handler(new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(Message msg) {
+
+                        switch (msg.what)
+                        {
+                            case STATE_LISTENING:
+                                Toast.makeText(getContext(),
+                                        "Escuchando", Toast.LENGTH_SHORT).show();
+                                break;
+                            case STATE_CONNECTING:
+                                Toast.makeText(getContext(),
+                                        "Conectando", Toast.LENGTH_SHORT).show();
+                                break;
+                            case STATE_CONNECTED:
+                                Toast.makeText(getContext(),
+                                        "Conectado", Toast.LENGTH_SHORT).show();
+                                break;
+                            case STATE_CONNECTION_FAILED:
+                                Toast.makeText(getContext(),
+                                        "Conexión fallida", Toast.LENGTH_SHORT).show();
+                                break;
+                            case STATE_MESSAGE_RECEIVED:
+                                byte[] readBuff= (byte[]) msg.obj;
+                                String tempMsg=new String(readBuff,0,msg.arg1);
+                                Toast.makeText(getContext(),
+                                        "Mensaje recibido: " + tempMsg, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
                /* bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
                 bluetoothAdapter.startDiscovery();
 
@@ -162,12 +204,13 @@ public class HomeFragment extends Fragment{
                 //envia cuando este discoverable*/
                 bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
                 Set<BluetoothDevice> bt=bluetoothAdapter.getBondedDevices();
-                ServerBTClass serverBTClass = new ServerBTClass(getContext());
+                ServerBTClass serverBTClass = new ServerBTClass(getContext(), handler);
                 serverBTClass.start();
 
-                for(BluetoothDevice b: bt){
+                bluetoothAdapter.cancelDiscovery();
 
-                    ClientBTClass clientBTClass = new ClientBTClass(b, getContext());
+                for(BluetoothDevice b: bt){
+                    ClientBTClass clientBTClass = new ClientBTClass(b, getContext(), handler);
                     clientBTClass.start();
                 }
 

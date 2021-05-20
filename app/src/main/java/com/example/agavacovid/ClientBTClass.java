@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import java.io.OutputStream;
 import java.util.UUID;
 
 
@@ -46,14 +47,21 @@ public class ClientBTClass extends Thread {
         super.run();
 
         try {
+
             socket.connect();
             Message message=Message.obtain();
             message.what=STATE_CONNECTED;
             handler.sendMessage(message);
-            sendReceive = new SendReceive(socket, context, handler);
-            sendReceive.start();
+            OutputStream os = socket.getOutputStream();
+            os.write("CACNEA".getBytes());
+            message = Message.obtain();
+            message.what=STATE_MESSAGE_RECEIVED;
+            handler.sendMessage(message);
+            //sendReceive = new SendReceive(socket, context, handler);
+            //sendReceive.start();
             //sendReceive.write("CACNEA".getBytes());
-            sendReceive.write("NOIVERN".getBytes());
+            //sendReceive.write("NOIVERN".getBytes());
+
 
         } catch (IOException e) {
             e.printStackTrace();

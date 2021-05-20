@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.BaseColumns;
 import android.util.ArrayMap;
 import android.widget.Toast;
@@ -51,8 +52,10 @@ public class SendReceive extends Thread
         this.handler = handler;
 
         try {
+
             tempIn=bluetoothSocket.getInputStream();
             tempOut=bluetoothSocket.getOutputStream();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,28 +76,28 @@ public class SendReceive extends Thread
             try {
                 bytes = inputStream.read(buffer);
                 handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
-                Date fecha_rec = new Date();
+               // Date fecha_rec = new Date();
                 String tempMsg=new String(buffer,0, bytes);
 
-                Toast.makeText(context,tempMsg, Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,tempMsg, Toast.LENGTH_LONG).show();
 
-                DbHelper dbHelper = new DbHelper(context);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                ContentValues values = new ContentValues();
+                //DbHelper dbHelper = new DbHelper(context);
+                //SQLiteDatabase db = dbHelper.getWritableDatabase();
+                //ContentValues values = new ContentValues();
 
-                values.clear();
-                values.put(AgavaContract.IdsAjenos.ID_EF, tempMsg);
-                values.put(AgavaContract.IdsAjenos.FECHA_REC, fecha_rec.toString());
+                //values.clear();
+                //values.put(AgavaContract.IdsAjenos.ID_EF, tempMsg);
+                //values.put(AgavaContract.IdsAjenos.FECHA_REC, fecha_rec.toString());
 
-                long newRowId = db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
+                //long newRowId = db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
 
-                Toast.makeText(context, "Has recibido un id. Tabla id = " + newRowId + "DirBlue = " + bluetoothSocket.getRemoteDevice().getAddress(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Has recibido un id. Tabla id = " + newRowId + "DirBlue = " + bluetoothSocket.getRemoteDevice().getAddress(), Toast.LENGTH_LONG).show();
 
 
                 //CREAR LA QUERY CON LOS DATOS RECIBIDOS E INSERTAR
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(context, "Error en el sendreceive bien feo", Toast.LENGTH_LONG).show();
+               // Toast.makeText(context, "Error en el sendreceive bien feo", Toast.LENGTH_LONG).show();
 
             }
         }

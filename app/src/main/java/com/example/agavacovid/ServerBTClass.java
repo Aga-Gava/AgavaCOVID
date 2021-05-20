@@ -50,9 +50,6 @@ public class ServerBTClass extends Thread{
 
                 socket=serverSocket.accept();
 
-                Toast.makeText(context,
-                        "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ " + socket, Toast.LENGTH_SHORT).show();
-
             } catch (IOException e) {
                 e.printStackTrace();
 

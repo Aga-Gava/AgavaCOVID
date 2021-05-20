@@ -107,7 +107,12 @@ public class MainActivity extends AppCompatActivity {
         values.put(AgavaContract.IdsPropios.ID_EF, "CACNEA");
         values.put(AgavaContract.IdsAjenos.FECHA_REC, new Date().toString());
         db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
-
+        /*
+        values.clear();
+        values.put(AgavaContract.IdsPropios.ID_EF, "1234561112411");
+        values.put(AgavaContract.IdsAjenos.FECHA_REC, new Date().toString());
+        db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
+*/
 
         if (this.isListening) {
             stopListening();

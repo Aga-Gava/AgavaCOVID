@@ -204,11 +204,11 @@ public class HomeFragment extends Fragment{
                 //envia cuando este discoverable*/
                 bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
                 Set<BluetoothDevice> bt=bluetoothAdapter.getBondedDevices();
-                ServerBTClass serverBTClass = new ServerBTClass(getContext(), handler);
+                BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+               ServerBTClass serverBTClass = new ServerBTClass(getContext(), handler);
                 serverBTClass.start();
 
-                bluetoothAdapter.cancelDiscovery();
-
+                int i = 1;
                 for(BluetoothDevice b: bt){
                     ClientBTClass clientBTClass = new ClientBTClass(b, getContext(), handler);
                     clientBTClass.start();

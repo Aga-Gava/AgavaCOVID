@@ -35,7 +35,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 AgavaContract.IDS_PROPIOS_TABLA,
                 AgavaContract.IdsPropios._ID,
                 AgavaContract.IdsPropios.ID_EF,
-                AgavaContract.IdsPropios.CLAVE,
+                AgavaContract.IdsPropios.CLAVE_GEN,
                 AgavaContract.IdsPropios.FECHA_GEN);
         db.execSQL(sql);
 
@@ -53,6 +53,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     // Llamado siempre que tengamos una nueva version
+    //Hecho solo para pruebas. De otro modo, se borrarian los IDs entre cada actualizacion
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Borramos la base de datos antigua

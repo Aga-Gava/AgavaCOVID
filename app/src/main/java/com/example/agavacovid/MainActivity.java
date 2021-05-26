@@ -1,21 +1,16 @@
 package com.example.agavacovid;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.provider.BaseColumns;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.agavacovid.persistence.AgavaContract;
@@ -28,19 +23,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -103,10 +90,28 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+
+
         values.clear();
-        values.put(AgavaContract.IdsPropios.ID_EF, "CACNEA");
-        values.put(AgavaContract.IdsAjenos.FECHA_REC, new Date().toString());
-        db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
+        values.put(AgavaContract.IdsPropios.ID_EF, "910a5497fa536069da1e00aecb93e45af7943b93789933d9b61cf814b35533eb");
+        values.put(AgavaContract.IdsPropios.CLAVE_GEN, "MC4CAQAwBQYDK2VwBCIEIPtCxE+YheK+57B6xfjrGhjeYzc2MUkOGlaynnVEO/L8");
+        values.put(AgavaContract.IdsPropios.FECHA_GEN, "2021-05-26 17:00:00"); //yyyy-MM-dd HH:mm:ss
+        db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
+
+        values.clear();
+        values.put(AgavaContract.IdsPropios.ID_EF, "6b1bf72b210dabcd460870abc1d6c438be23666dba14d970b2032e2f12ff2597");
+        values.put(AgavaContract.IdsPropios.CLAVE_GEN, "910a5497fa536069da1e00aecb93e45af7943b93789933d9b61cf814b35533eb");
+        values.put(AgavaContract.IdsPropios.FECHA_GEN, "2021-05-26 17:15:00");
+        db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
+
+        values.clear();
+        values.put(AgavaContract.IdsPropios.ID_EF, "0b544e851e236f6f70b33dfd93fab8df2cfd95975981bf627834a391851a1578");
+        values.put(AgavaContract.IdsPropios.CLAVE_GEN, "6b1bf72b210dabcd460870abc1d6c438be23666dba14d970b2032e2f12ff2597");
+        values.put(AgavaContract.IdsPropios.FECHA_GEN, "2021-05-26 17:30:00");
+        db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
+
+        dbHelper.close();
+
         /*
         values.clear();
         values.put(AgavaContract.IdsPropios.ID_EF, "1234561112411");

@@ -1,15 +1,11 @@
 package com.example.agavacovid;
 
 import android.bluetooth.BluetoothSocket;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
-import android.os.Message;
 import android.provider.BaseColumns;
-import android.util.ArrayMap;
-import android.widget.Toast;
 
 import com.example.agavacovid.persistence.AgavaContract;
 import com.example.agavacovid.persistence.DbHelper;
@@ -27,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 public class SendReceive extends Thread
@@ -113,7 +108,7 @@ public class SendReceive extends Thread
             String[] projection = {
                     BaseColumns._ID,
                     AgavaContract.IdsPropios.ID_EF,
-                    AgavaContract.IdsPropios.CLAVE,
+                    AgavaContract.IdsPropios.CLAVE_GEN,
                     AgavaContract.IdsPropios.FECHA_GEN,
             };
 
@@ -136,7 +131,7 @@ public class SendReceive extends Thread
                 String fechagen = cursor.getString(
                         cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
                 Calendar c= Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");  //Thu Jan 08 10:52:56 IST 2015
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");  //Wed May 26 17:00:00 GMT+02:00 2021
                 c.setTime(sdf.parse(fechagen));
                 idsfecha.put(c.getTime(), idEf);
             }

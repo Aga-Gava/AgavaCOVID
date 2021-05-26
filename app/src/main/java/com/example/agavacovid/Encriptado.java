@@ -16,8 +16,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Encriptado {
-/*    private static SecretKey key = AESUtil.generateKey(256);
+public class Encriptado {/*
+    private static SecretKey key = AESUtil.generateKey(256);
     private static String initVector="";
 
     @SuppressLint("NewApi")

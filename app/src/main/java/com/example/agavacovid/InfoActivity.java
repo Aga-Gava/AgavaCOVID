@@ -136,15 +136,14 @@ public class InfoActivity extends AppCompatActivity {
 
         String[] projection = {
                 BaseColumns._ID,
-                AgavaContract.IdsPropios.ID_EF,
-                AgavaContract.IdsPropios.CLAVE_GEN,
-                AgavaContract.IdsPropios.FECHA_GEN,
+                AgavaContract.IdsAjenos.ID_EF,
+                AgavaContract.IdsAjenos.FECHA_REC,
         };
 
         // Filter results WHERE "title" = 'My Title'
 
         Cursor cursor = db.query(
-                AgavaContract.IDS_PROPIOS_TABLA,   // The table to query
+                AgavaContract.IDS_AJENOS_TABLA,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -156,9 +155,9 @@ public class InfoActivity extends AppCompatActivity {
 
         while(cursor.moveToNext()) {
             String idEf = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.ID_EF));
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.ID_EF));
             String fechagen = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.FECHA_REC));
 
             Calendar c= Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //2021-05-26 17:00:00
@@ -184,7 +183,9 @@ public class InfoActivity extends AppCompatActivity {
         });
 
         Toast.makeText(getApplicationContext(),
-                "Cacnea shiny: " + listafechas.get(listafechas.size()-1), Toast.LENGTH_LONG).show();
+                "Cacnea shiny: " + idsfecha.get(listafechas.get(listafechas.size()-1)), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),
+                "Dialga shiny: " + listafechas.get(listafechas.size()-1), Toast.LENGTH_LONG).show();
 
 
         cursor.close();

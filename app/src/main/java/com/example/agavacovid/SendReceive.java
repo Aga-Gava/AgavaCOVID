@@ -1,6 +1,7 @@
 package com.example.agavacovid;
 
 import android.bluetooth.BluetoothSocket;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -71,20 +72,22 @@ public class SendReceive extends Thread
             try {
                 bytes = inputStream.read(buffer);
                 handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
-               // Date fecha_rec = new Date();
+                Date fecha_rec = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String fecha_rec_format = sdf.format(fecha_rec);
                 String tempMsg=new String(buffer,0, bytes);
 
                 //Toast.makeText(context,tempMsg, Toast.LENGTH_LONG).show();
 
-                //DbHelper dbHelper = new DbHelper(context);
-                //SQLiteDatabase db = dbHelper.getWritableDatabase();
-                //ContentValues values = new ContentValues();
+                DbHelper dbHelper = new DbHelper(context);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
 
-                //values.clear();
-                //values.put(AgavaContract.IdsAjenos.ID_EF, tempMsg);
-                //values.put(AgavaContract.IdsAjenos.FECHA_REC, fecha_rec.toString());
+                values.clear();
+                values.put(AgavaContract.IdsAjenos.ID_EF, tempMsg);
+                values.put(AgavaContract.IdsAjenos.FECHA_REC, fecha_rec_format);
 
-                //long newRowId = db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
+                db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
 
                 //Toast.makeText(context, "Has recibido un id. Tabla id = " + newRowId + "DirBlue = " + bluetoothSocket.getRemoteDevice().getAddress(), Toast.LENGTH_LONG).show();
 
@@ -131,7 +134,7 @@ public class SendReceive extends Thread
                 String fechagen = cursor.getString(
                         cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
                 Calendar c= Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");  //Wed May 26 17:00:00 GMT+02:00 2021
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //Wed May 26 17:00:00 GMT+02:00 2021
                 c.setTime(sdf.parse(fechagen));
                 idsfecha.put(c.getTime(), idEf);
             }

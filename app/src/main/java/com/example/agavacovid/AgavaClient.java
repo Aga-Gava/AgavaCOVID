@@ -1,6 +1,13 @@
 package com.example.agavacovid;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import android.widget.Toast;
+
+import com.example.agavacovid.persistence.AgavaContract;
+import com.example.agavacovid.persistence.DbHelper;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -9,6 +16,16 @@ import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -16,22 +33,23 @@ import java.net.MulticastSocket;
  * @author Juan
  */
 public class AgavaClient extends AgavaSocket {
+    private int code;
+    private String fecha;
+    private Context context;
+
     public AgavaClient() throws IOException{super("cliente");} //Se usa el constructor para cliente de Conexion
+    public AgavaClient(int code, String fecha, Context context) throws IOException{
+        super("cliente");
+        this.code = code;
+        this.fecha = fecha;
+        this.context = context;
+    } //Se usa el constructor para cliente de Conexion
 
     public void startClient() throws IOException{ //Método para iniciar el cliente
         try{
 
             //Flujo de datos hacia el servidor
             salidaServidor = new DataOutputStream(cs.getOutputStream());
-
-
-            salidaServidor.writeUTF("2");
-
-            salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
-                    + " VALUES ('bidoof', '2019-02-02', '2018-06-04')");
-
-            salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
-                    + " VALUES ('cacturne', '2019-02-02', '2018-06-04')");
 
             //Se enviarán dos mensajes
             /*for (int i = 0; i < 2; i++)
@@ -57,33 +75,73 @@ public class AgavaClient extends AgavaSocket {
         socket.joinGroup(group);
 
         DatagramPacket packet;
-        for (int i = 0; i < 5; i++) {
-            byte[] buf = new byte[256];
-            packet = new DatagramPacket(buf, buf.length);
 
-            socket.receive(packet);
+        try {
+            // ACCESO A BASE DE DATOS Y PASAMOS UNICAMNETE LOS DATOS. LA CONSULTA SE CREA AL RECIBIR
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-            String received = new String(packet.getData());
+            String[] projection = {
+                    BaseColumns._ID,
+                    AgavaContract.IdsPropios.ID_EF,
+                    AgavaContract.IdsPropios.CLAVE_GEN,
+                    AgavaContract.IdsPropios.FECHA_GEN,
+            };
+
+            // Filter results WHERE "title" = 'My Title'
+
+            Cursor cursor = db.query(
+                    AgavaContract.IDS_PROPIOS_TABLA,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    null,              // The columns for the WHERE clause
+                    null,          // The values for the WHERE clause
+                    null,                   // don't group the rows
+                    null,                   // don't filter by row groups
+                    null               // The sort order
+            );
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(code).append(",").append(fecha).append(",");
+
+            while(cursor.moveToNext()) {
+                String clavegen = cursor.getString(
+                        cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.CLAVE_GEN));
+                String fechagen = cursor.getString(
+                        cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
+                stringBuilder.append(clavegen).append(",").append(fechagen);
+
+            }
+            cursor.close();
+            String mensaje = stringBuilder.toString();
+            outputStream.write(mensaje.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        byte[] buf = new byte[256];
+        packet = new DatagramPacket(buf, buf.length);
+
+        socket.receive(packet);
+
+        String received = new String(packet.getData());
 
 ///////////////////////////////////////////KILL//////////////////////////////////////////////
-            try{
+        try{
 
-                //Flujo de datos hacia el servidor
-                salidaServidor = new DataOutputStream(cs.getOutputStream());
+            //Flujo de datos hacia el servidor
+            salidaServidor = new DataOutputStream(cs.getOutputStream());
 
-                salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
-                        + " VALUES ('gengar', '2019-02-02', '2018-06-04')");
-                //Se enviarán dos mensajes
+            salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
+                    + " VALUES ('gengar', '2019-02-02', '2018-06-04')");
+            //Se enviarán dos mensajes
 
 
-            }
-            catch (Exception e){
+        }
+        catch (Exception e){
 
-                System.out.println(e.getMessage());
-            }
-
-            ////////////////////////////////////KILL////////////////////////////////////////////////////
-
+            System.out.println(e.getMessage());
         }
         cs.close();
         socket.leaveGroup(group);

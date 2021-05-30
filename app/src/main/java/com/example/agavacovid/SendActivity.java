@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class SendActivity extends AppCompatActivity  {
 
     private View vistaEnvio;
+    private EditText code;
     private EditText fecha;
     private Button buttonConfirmacion;
     private DatePickerDialog picker;
@@ -94,11 +96,8 @@ public class SendActivity extends AppCompatActivity  {
 
         bluetoothAdapter.startDiscovery();
 
-
-
-
-
         vistaEnvio = (View) findViewById(R.id.vistaEnvio);
+        code =  (EditText) vistaEnvio.findViewById(R.id.outlinedTextField);
         fecha = (EditText) vistaEnvio.findViewById(R.id.etPlannedDate);
         buttonConfirmacion = (Button) vistaEnvio.findViewById(R.id.buttonConfirmacion);
 
@@ -115,7 +114,7 @@ public class SendActivity extends AppCompatActivity  {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                fecha.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                fecha.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " " + "00" + ":" + "00" + ":" + "00");
                             }
                         }, year, month, day);
                 picker.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -127,7 +126,32 @@ public class SendActivity extends AppCompatActivity  {
         buttonConfirmacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SendActivity.this, PopUp.class));
+                String fecharec;
+
+                if(code.getText() == null){
+                    Toast.makeText(getApplicationContext(),
+                            "Debes introducir el código de diagnóstico. ", Toast.LENGTH_LONG).show();
+                }else {
+                    if (code.getText().length() < 12) {
+                        Toast.makeText(getApplicationContext(),
+                                "Código de diagnóstico incompleto. ", Toast.LENGTH_LONG).show();
+                    } else {
+                        if(fecha.getText() ==null){
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Date fecharecdate = new Date();
+                            sdf.format(fecharecdate);
+                            fecharec = fecharecdate.toString();
+                        }else{
+                            fecharec = String.valueOf(fecha.getText());
+                        }
+                        Intent intent = new Intent(SendActivity.this, PopUp.class);
+                        Bundle b = new Bundle();
+                        b.putInt("codigo", Integer.valueOf(String.valueOf(code.getText())));
+                        b.putString("fecha", fecharec);
+                        intent.putExtras(b);
+                        startActivity(intent);
+                    }
+                }
             }
         });
     }

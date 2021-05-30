@@ -36,6 +36,8 @@ public class PopUp extends Activity {
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
     private Map<String, Date> mNewDevicesMap;
+    private int code;
+    private String fecha;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -64,6 +66,12 @@ public class PopUp extends Activity {
 
         setContentView(R.layout.pop_up);
         getWindow().getDecorView().setBackground(new ColorDrawable(Color.WHITE));
+
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            code = b.getInt("code");
+            fecha = b.getString("fecha");
+        }
 
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
         mNewDevicesMap = new HashMap<>();
@@ -118,7 +126,7 @@ public class PopUp extends Activity {
 
 
                 try {
-                    AgavaClient cli = new AgavaClient(); //Se crea el cliente
+                    AgavaClient cli = new AgavaClient(code, fecha, getApplicationContext()); //Se crea el cliente
 
                     //System.out.println("Iniciando cliente\n");
                     cli.startClient(); //Se inicia el cliente

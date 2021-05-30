@@ -46,12 +46,12 @@ public class AgavaClient extends AgavaSocket {
     } //Se usa el constructor para cliente de Conexion
 
     public void startClient() throws IOException{ //Método para iniciar el cliente
-        try{
+        // try{
 
-            //Flujo de datos hacia el servidor
-            salidaServidor = new DataOutputStream(cs.getOutputStream());
+        //Flujo de datos hacia el servidor
+        salidaServidor = new DataOutputStream(cs.getOutputStream());
 
-            //Se enviarán dos mensajes
+        //Se enviarán dos mensajes
             /*for (int i = 0; i < 2; i++)
             {
 
@@ -60,21 +60,13 @@ public class AgavaClient extends AgavaSocket {
 
 
 
-            //cs.close();//Fin de la conexión
+        //cs.close();//Fin de la conexión
 
-        }
-        catch (Exception e){
+        //}
+        //catch (Exception e){
 
-            System.out.println(e.getMessage());
-        }
-
-
-
-        MulticastSocket socket = new MulticastSocket(4446);
-        InetAddress group = InetAddress.getByName("224.0.0.251");
-        socket.joinGroup(group);
-
-        DatagramPacket packet;
+        //  System.out.println(e.getMessage());
+        //}
 
         try {
             // ACCESO A BASE DE DATOS Y PASAMOS UNICAMNETE LOS DATOS. LA CONSULTA SE CREA AL RECIBIR
@@ -108,43 +100,16 @@ public class AgavaClient extends AgavaSocket {
                         cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.CLAVE_GEN));
                 String fechagen = cursor.getString(
                         cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
-                stringBuilder.append(clavegen).append(",").append(fechagen);
+                stringBuilder.append(clavegen).append(",").append(fechagen).append(",");
 
             }
             cursor.close();
             String mensaje = stringBuilder.toString();
-            outputStream.write(mensaje.getBytes());
+            Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show();
+            salidaServidor.writeUTF(mensaje);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-
-        byte[] buf = new byte[256];
-        packet = new DatagramPacket(buf, buf.length);
-
-        socket.receive(packet);
-
-        String received = new String(packet.getData());
-
-///////////////////////////////////////////KILL//////////////////////////////////////////////
-        try{
-
-            //Flujo de datos hacia el servidor
-            salidaServidor = new DataOutputStream(cs.getOutputStream());
-
-            salidaServidor.writeUTF("INSERT INTO ids_infectados (clave_gen, fecha_gen, fecha_rec)"
-                    + " VALUES ('gengar', '2019-02-02', '2018-06-04')");
-            //Se enviarán dos mensajes
-
-
-        }
-        catch (Exception e){
-
-            System.out.println(e.getMessage());
-        }
-        cs.close();
-        socket.leaveGroup(group);
-        socket.close();
+        cs.close(); //SI FALLA LO DEL GRUPO
     }
 }

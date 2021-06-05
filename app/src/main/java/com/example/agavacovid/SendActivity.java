@@ -34,30 +34,6 @@ public class SendActivity extends AppCompatActivity  {
     private static final long CATORCE_DIAS = 1209600000; //El numero del demonio son 14 dias en milisegundos T-T
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
-    private Map<String, Date> mNewDevicesMap;
-
-
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String action = intent.getAction();
-
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                //discovery starts, we can show progress dialog or perform other tasks
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismis progress dialog
-            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                //bluetooth device found
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                Toast.makeText(getApplicationContext(), "Found device "+ device.getName(), Toast.LENGTH_SHORT).show();
-                mNewDevicesMap.put(device.getAddress(), new Date());
-            }
-
-        }
-    };
 
 
 
@@ -68,33 +44,14 @@ public class SendActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_send);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
-        mNewDevicesMap = new HashMap<>();
-
 
         if(!bluetoothAdapter.isEnabled()){
 
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,130);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
 
-
-        if (bluetoothAdapter.isDiscovering()) {
-            bluetoothAdapter.cancelDiscovery();
-        }
-
-
-        IntentFilter filter = new IntentFilter();
-
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-        registerReceiver(mReceiver, filter);
-
-        bluetoothAdapter.startDiscovery();
 
         vistaEnvio = (View) findViewById(R.id.vistaEnvio);
         code =  (EditText) vistaEnvio.findViewById(R.id.outlinedTextField);
@@ -114,7 +71,7 @@ public class SendActivity extends AppCompatActivity  {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                fecha.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " " + "00" + ":" + "00" + ":" + "00");
+                                fecha.setText(year + "-" + String.format("%02d", monthOfYear + 1) + "-" + String.format("%02d", dayOfMonth));
                             }
                         }, year, month, day);
                 picker.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -128,7 +85,7 @@ public class SendActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 String fecharec;
 
-                if(code.getText() == null){
+                if(code.getText().equals("")){
                     Toast.makeText(getApplicationContext(),
                             "Debes introducir el código de diagnóstico. ", Toast.LENGTH_LONG).show();
                 }else {
@@ -142,11 +99,11 @@ public class SendActivity extends AppCompatActivity  {
                             sdf.format(fecharecdate);
                             fecharec = fecharecdate.toString();
                         }else{
-                            fecharec = String.valueOf(fecha.getText());
+                            fecharec = String.valueOf(fecha.getText()) + " " + "00" + ":" + "00" + ":" + "00";
                         }
                         Intent intent = new Intent(SendActivity.this, PopUp.class);
                         Bundle b = new Bundle();
-                        b.putInt("codigo", Integer.valueOf(String.valueOf(code.getText())));
+                        b.putLong("code", Long.parseLong(String.valueOf(code.getText())));
                         b.putString("fecha", fecharec);
                         intent.putExtras(b);
                         startActivity(intent);

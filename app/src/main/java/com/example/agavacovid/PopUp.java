@@ -36,29 +36,8 @@ public class PopUp extends Activity {
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
     private Map<String, Date> mNewDevicesMap;
-    private int code;
+    private long code;
     private String fecha;
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String action = intent.getAction();
-
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                //discovery starts, we can show progress dialog or perform other tasks
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismis progress dialog
-            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                //bluetooth device found
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                Toast.makeText(getApplicationContext(), "Found device "+ device.getName(), Toast.LENGTH_SHORT).show();
-                mNewDevicesMap.put(device.getAddress(), new Date());
-            }
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,38 +48,17 @@ public class PopUp extends Activity {
 
         Bundle b = getIntent().getExtras();
         if(b != null) {
-            code = b.getInt("code");
+            code = b.getLong("code");
             fecha = b.getString("fecha");
         }
 
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
-        mNewDevicesMap = new HashMap<>();
-
 
         if(!bluetoothAdapter.isEnabled()){
 
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,130);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
-
-
-        if (bluetoothAdapter.isDiscovering()) {
-            bluetoothAdapter.cancelDiscovery();
-        }
-
-
-        IntentFilter filter = new IntentFilter();
-
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-        registerReceiver(mReceiver, filter);
-
-        bluetoothAdapter.startDiscovery();
-
-
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -114,8 +72,6 @@ public class PopUp extends Activity {
         buttonAceptar = (Button) findViewById(R.id.buttonAceptar);
         buttonCancelar = (Button) findViewById(R.id.buttonCancelar);
         textTituloPopUp = (TextView) findViewById(R.id.textTituloPopUp);
-
-
 
         buttonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override

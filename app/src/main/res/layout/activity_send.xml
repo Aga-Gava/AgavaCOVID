@@ -83,21 +83,15 @@
                 android:layout_width="1dp"
                 android:layout_height="15dp"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
                 android:id="@+id/outlinedTextField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_codigo">
+                android:hint="@string/hint_codigo"
+                android:inputType="number"
+                android:maxLength="12"
+                android:maxLines="1" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:maxLength="12"
-                    android:inputType="number"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
             <Space
                 android:layout_width="1dp"
                 android:layout_height="10dp"/>

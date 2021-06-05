@@ -48,7 +48,6 @@ import java.util.Set;
 public class HomeFragment extends Fragment{
 
     private HomeViewModel homeViewModel;
-    private Button info;
     private ImageButton buttonInfo;
     private ImageButton buttonEnvio;
     private TextView textButtonEnvio;
@@ -56,58 +55,8 @@ public class HomeFragment extends Fragment{
     private TextView textButtonInfoPlus;
     private ImageView agava;
 
-    private final MyBroadcastReceiver br = new MyBroadcastReceiver(getContext());
-
-    /*private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String action = intent.getAction();
-            Toast.makeText(getContext(),
-                    "Has recibido un cacnea (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
-            if(bluetoothAdapter.isDiscovering()){
-                Toast.makeText(getContext(),
-                        "Has recibido una virusaaa27 (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
-                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                    //bluetooth device found
-                    BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                    Toast.makeText(context.getApplicationContext(), "Found device " + device.getName(), Toast.LENGTH_SHORT).show();
-                    String direccionDevice = device.getAddress();
-                    mNewDevicesMap.put(direccionDevice, new Date());
-                    bluetoothAdapter.cancelDiscovery();
-                    Calendar c = Calendar.getInstance();
-                    c.setTime(mNewDevicesMap.get(direccionDevice));
-                    c.add(Calendar.SECOND, 30);
-                    Date fecha = c.getTime();
-                    while(!new Date().after(fecha)){ //Habria que comprobar también la intensidad de señal
-
-                    }
-                    Toast.makeText(context.getApplicationContext(),"Espera finalizada", Toast.LENGTH_SHORT).show();
-
-                    //!!!!!COMPROBAR QUE EL DEVICE SE MANTIENE CUNADO CANCELAMOS DISCOVERY
-
-                    ServerBTClass serverClass=new ServerBTClass(getContext());
-                    serverClass.start();
-
-                    ClientBTClass clientClass=new ClientBTClass(device, getContext());
-                    clientClass.start();
-
-                    //insercion de base de datos
-                }
-            }
-
-           /* if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                //discovery starts, we can show progress dialog or perform other tasks
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismis progress dialog
-            } else comentarion de cerrar
-
-        }
-    };*/
 
     private BluetoothAdapter bluetoothAdapter;
-    private Map<String, Date> mNewDevicesMap;
 
     static final int STATE_LISTENING = 1;
     static final int STATE_CONNECTING=2;
@@ -151,7 +100,7 @@ public class HomeFragment extends Fragment{
 
         agava.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                mNewDevicesMap = new HashMap<>();
+
 
                 Handler handler=new Handler(new Handler.Callback() {
                     @Override
@@ -186,22 +135,6 @@ public class HomeFragment extends Fragment{
                     }
                 });
 
-               /* bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
-                bluetoothAdapter.startDiscovery();
-
-                Toast.makeText(getContext(),
-                        "Holaaaaa"+ bluetoothAdapter.isDiscovering(), Toast.LENGTH_SHORT).show();
-
-                IntentFilter filter = new IntentFilter();
-
-                filter.addAction(BluetoothDevice.ACTION_FOUND);
-                //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-                //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-                getActivity().registerReceiver(br, filter);
-                Toast.makeText(getContext(),
-                        "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
-                //envia cuando este discoverable*/
                 bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
                 Set<BluetoothDevice> bt=bluetoothAdapter.getBondedDevices();
                 BluetoothAdapter.getDefaultAdapter().cancelDiscovery();

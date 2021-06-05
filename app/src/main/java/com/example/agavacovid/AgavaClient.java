@@ -33,12 +33,12 @@ import java.util.Map;
  * @author Juan
  */
 public class AgavaClient extends AgavaSocket {
-    private int code;
+    private long code;
     private String fecha;
     private Context context;
 
     public AgavaClient() throws IOException{super("cliente");} //Se usa el constructor para cliente de Conexion
-    public AgavaClient(int code, String fecha, Context context) throws IOException{
+    public AgavaClient(long code, String fecha, Context context) throws IOException{
         super("cliente");
         this.code = code;
         this.fecha = fecha;
@@ -46,7 +46,7 @@ public class AgavaClient extends AgavaSocket {
     } //Se usa el constructor para cliente de Conexion
 
     public void startClient() throws IOException{ //Método para iniciar el cliente
-        // try{
+        //try{
 
         //Flujo de datos hacia el servidor
         salidaServidor = new DataOutputStream(cs.getOutputStream());

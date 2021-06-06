@@ -21,7 +21,8 @@ public class DbHelper extends SQLiteOpenHelper {
     // Llamado para crear la tabla
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        String dropTable = "DROP TABLE IF EXISTS ";
+        db.execSQL(dropTable + AgavaContract.IDS_PROPIOS_TABLA);
         Log.d(TAG, "onCreate con SQL.");
 
         String sql = String.format("CREATE TABLE %s" +   //LOS MIOS

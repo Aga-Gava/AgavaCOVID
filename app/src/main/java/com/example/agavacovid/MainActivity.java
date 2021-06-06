@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.example.agavacovid.persistence.AgavaContract;
 import com.example.agavacovid.persistence.DbHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,7 +27,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private MulticastListenerThread multicastListenerThread;
     private boolean isListening = false;
     private WifiManager.MulticastLock wifiLock;
+    private List<String> ListaHashes;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -99,18 +108,20 @@ public class MainActivity extends AppCompatActivity {
         db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
 
         values.clear();
-        values.put(AgavaContract.IdsPropios.ID_EF, "6b1bf72b210dabcd460870abc1d6c438be23666dba14d970b2032e2f12ff2597");
+        values.put(AgavaContract.IdsPropios.ID_EF, "0ab330eb9fae7fcca4ed7f0f65f018235693969d5cdd4720f437ea43004df0fe");
         values.put(AgavaContract.IdsPropios.CLAVE_GEN, "910a5497fa536069da1e00aecb93e45af7943b93789933d9b61cf814b35533eb");
         values.put(AgavaContract.IdsPropios.FECHA_GEN, "2021-05-26 17:15:00");
         db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
 
         values.clear();
-        values.put(AgavaContract.IdsPropios.ID_EF, "0b544e851e236f6f70b33dfd93fab8df2cfd95975981bf627834a391851a1578");
-        values.put(AgavaContract.IdsPropios.CLAVE_GEN, "6b1bf72b210dabcd460870abc1d6c438be23666dba14d970b2032e2f12ff2597");
+        values.put(AgavaContract.IdsPropios.ID_EF, "f64757888e6330d08dbfb0d2f48eca29df715adc8fa9d86fd97d48003a1cfe12");
+        values.put(AgavaContract.IdsPropios.CLAVE_GEN, "0ab330eb9fae7fcca4ed7f0f65f018235693969d5cdd4720f437ea43004df0fe");
         values.put(AgavaContract.IdsPropios.FECHA_GEN, "2021-05-26 17:30:00");
         db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
 
         dbHelper.close();
+
+        ListaHashes = new ArrayList<>();
 
         /*
         values.clear();
@@ -213,14 +224,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void outputErrorToConsole(String errorMessage) {
-        outputTextToConsole(errorMessage);
+        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
-    public void outputTextToConsole(String message) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void comprobarHash(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        String[] arrSplit = message.split(",");
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        StringBuffer result = new StringBuffer();
+        byte[] hash = digest.digest(arrSplit[0].getBytes());
+        for (byte byt : hash) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
+        String hashString = result.toString();
+        Toast.makeText(getApplicationContext(), hashString, Toast.LENGTH_SHORT).show();
+
     }
 
-    public void comprobarIDsContagiados(String listaIDs){
+    public boolean comprobarIDsContagiados(List<String> listaIDs){
         // crear la lista de IDs separando usando unas comas o algo bonico. Tambien puede ser "aga"
         db= dbHelper.getReadableDatabase();
         String[] projection = {
@@ -237,8 +262,10 @@ public class MainActivity extends AppCompatActivity {
                     cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.ID_EF));
             listaIdsAjenosBD.add(idEf);
         }
-
         cursor.close();
+
+        return !Collections.disjoint(listaIDs, listaIdsAjenosBD); //true si hay interseccion, false sino
+
     }
 
 }

@@ -33,10 +33,10 @@ public class MulticastListenerThread extends MulticastThread {
             String data = new String(packet.getData()).trim();
             //Desencriptar datos
             //
-            final String consoleMessage = "[" + ((getLocalIP().equals(packet.getAddress().getHostAddress())) ? "You" : packet.getAddress().getHostAddress()) + "] " + data + "\n";
+            final String consoleMessage = data;
 
             //this.getHandler().post(() -> getActivity().comprobarIDsContagiados(data));
-            this.getHandler().post(() -> getActivity().outputTextToConsole(consoleMessage));
+            this.getHandler().post(() -> getActivity().comprobarHash(consoleMessage));
         }
         if (multicastSocket != null)
             this.multicastSocket.close();

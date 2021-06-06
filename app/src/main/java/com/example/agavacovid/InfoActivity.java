@@ -33,28 +33,6 @@ import java.util.Map;
 public class InfoActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String action = intent.getAction();
-
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                //discovery starts, we can show progress dialog or perform other tasks
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismis progress dialog
-            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                //bluetooth device found
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                Toast.makeText(getApplicationContext(), "Found device "+ device.getName(), Toast.LENGTH_SHORT).show();
-                mNewDevicesMap.put(device.getAddress(), new Date());
-            }
-
-        }
-    };
-
-    private Map<String, Date> mNewDevicesMap;
 
     private ImageView imagen;
     private TextView consejo1;
@@ -70,8 +48,6 @@ public class InfoActivity extends AppCompatActivity {
 
 
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter();
-        mNewDevicesMap = new HashMap<>();
-
 
         if(!bluetoothAdapter.isEnabled()){
 
@@ -79,22 +55,6 @@ public class InfoActivity extends AppCompatActivity {
             //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,130);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
-
-
-        if (bluetoothAdapter.isDiscovering()) {
-            bluetoothAdapter.cancelDiscovery();
-        }
-
-
-        IntentFilter filter = new IntentFilter();
-
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-        registerReceiver(mReceiver, filter);
-
-        bluetoothAdapter.startDiscovery();
 
         Bundle b = getIntent().getExtras();
         int estado = 0; // or other values
@@ -134,16 +94,22 @@ public class InfoActivity extends AppCompatActivity {
         DbHelper dbHelper = new DbHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String[] projection = {
+     /*   String[] projection = {
                 BaseColumns._ID,
                 AgavaContract.IdsAjenos.ID_EF,
                 AgavaContract.IdsAjenos.FECHA_REC,
         };
 
         // Filter results WHERE "title" = 'My Title'
-
+        */
+        String[] projection = {
+                BaseColumns._ID,
+                AgavaContract.IdsPropios.ID_EF,
+                AgavaContract.IdsPropios.CLAVE_GEN,
+                AgavaContract.IdsPropios.FECHA_GEN,
+        };
         Cursor cursor = db.query(
-                AgavaContract.IDS_AJENOS_TABLA,   // The table to query
+                AgavaContract.IDS_PROPIOS_TABLA,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -155,11 +121,14 @@ public class InfoActivity extends AppCompatActivity {
 
         while(cursor.moveToNext()) {
             String idEf = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.ID_EF));
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.ID_EF));
+            String clavegen = cursor.getString(
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.CLAVE_GEN));
             String fechagen = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.FECHA_REC));
-
-            Calendar c= Calendar.getInstance();
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
+            Toast.makeText(getApplicationContext(),
+                    "Dialga shiny: " + idEf + " "+ clavegen +" " + fechagen, Toast.LENGTH_LONG).show();
+      /*      Calendar c= Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //2021-05-26 17:00:00
 
             try {
@@ -181,15 +150,16 @@ public class InfoActivity extends AppCompatActivity {
                 return o1.compareTo(o2);
             } //esta ordenada parriba o pabajo? :D
         });
-
-        Toast.makeText(getApplicationContext(),
+*/
+  /*      Toast.makeText(getApplicationContext(),
                 "Cacnea shiny: " + idsfecha.get(listafechas.get(listafechas.size()-1)), Toast.LENGTH_LONG).show();
         Toast.makeText(getApplicationContext(),
                 "Dialga shiny: " + listafechas.get(listafechas.size()-1), Toast.LENGTH_LONG).show();
+*/
 
+
+    }
 
         cursor.close();
         dbHelper.close();
-
-    }
-}
+}}

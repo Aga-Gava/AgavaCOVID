@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.agavacovid.ClientBTClass;
 import com.example.agavacovid.InfoActivity;
+import com.example.agavacovid.MainActivity;
 import com.example.agavacovid.MyBroadcastReceiver;
 import com.example.agavacovid.R;
 import com.example.agavacovid.SendActivity;
@@ -70,7 +71,7 @@ public class HomeFragment extends Fragment{
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        int estado = 1; //0 es verde, 1 es amarillo, 2 es rojo
+        int estado = MainActivity.getEstado(); //0 es verde, 1 es amarillo, 2 es rojo
 
         agava = (ImageView) view.findViewById(R.id.imageAgava);
         buttonInfo = (ImageButton) view.findViewById(R.id.buttonInfo);
@@ -101,7 +102,7 @@ public class HomeFragment extends Fragment{
         agava.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
-
+                MainActivity.setEstado(0);
                 Handler handler=new Handler(new Handler.Callback() {
                     @Override
                     public boolean handleMessage(Message msg) {
@@ -194,44 +195,6 @@ public class HomeFragment extends Fragment{
             }
         });
         return view;
-    }
-
-
-    /*private void pairDevice(BluetoothDevice device) {
-        try {
-            if (D)
-                Log.d(TAG, "Start Pairing...");
-
-            waitingForBonding = true;
-
-            Method m = device.getClass()
-                    .getMethod("createBond", (Class[]) null);
-            m.invoke(device, (Object[]) null);
-
-            if (D)
-                Log.d(TAG, "Pairing finished.");
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-    }*/
-
-  /*  private void unpairDevice(BluetoothDevice device) {
-        try {
-            Method m = device.getClass()
-                    .getMethod("removeBond", (Class[]) null);
-            m.invoke(device, (Object[]) null);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-    }*/
-
-    public boolean createBond(BluetoothDevice btDevice)
-            throws Exception
-    {
-        Class class1 = Class.forName("android.bluetooth.BluetoothDevice");
-        Method createBondMethod = class1.getMethod("createBond");
-        Boolean returnValue = (Boolean) createBondMethod.invoke(btDevice);
-        return returnValue.booleanValue();
     }
 
 }

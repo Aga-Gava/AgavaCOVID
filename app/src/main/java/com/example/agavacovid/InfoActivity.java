@@ -94,22 +94,22 @@ public class InfoActivity extends AppCompatActivity {
         DbHelper dbHelper = new DbHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-     /*   String[] projection = {
+        String[] projection = {
                 BaseColumns._ID,
                 AgavaContract.IdsAjenos.ID_EF,
                 AgavaContract.IdsAjenos.FECHA_REC,
         };
 
-        // Filter results WHERE "title" = 'My Title'
-        */
-        String[] projection = {
+
+
+        /*String[] projection = {
                 BaseColumns._ID,
                 AgavaContract.IdsPropios.ID_EF,
                 AgavaContract.IdsPropios.CLAVE_GEN,
                 AgavaContract.IdsPropios.FECHA_GEN,
-        };
+        };*/
         Cursor cursor = db.query(
-                AgavaContract.IDS_PROPIOS_TABLA,   // The table to query
+                AgavaContract.IDS_AJENOS_TABLA,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -126,9 +126,9 @@ public class InfoActivity extends AppCompatActivity {
                     cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.CLAVE_GEN));
             String fechagen = cursor.getString(
                     cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
-            Toast.makeText(getApplicationContext(),
-                    "Dialga shiny: " + idEf + " "+ clavegen +" " + fechagen, Toast.LENGTH_LONG).show();
-      /*      Calendar c= Calendar.getInstance();
+            //Toast.makeText(getApplicationContext(),
+             //       "Dialga shiny: " + idEf + " "+ clavegen +" " + fechagen, Toast.LENGTH_LONG).show();
+           Calendar c= Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //2021-05-26 17:00:00
 
             try {
@@ -144,22 +144,22 @@ public class InfoActivity extends AppCompatActivity {
         for(Date d: idsfecha.keySet()){
             listafechas.add(d);
         }
-        //listafechas.sort((d1,d2) -> d1.compareTo(d2));
+
         Collections.sort(listafechas, new Comparator<Date>() {
             public int compare(Date o1, Date o2) {
                 return o1.compareTo(o2);
             } //esta ordenada parriba o pabajo? :D
         });
-*/
+
   /*      Toast.makeText(getApplicationContext(),
                 "Cacnea shiny: " + idsfecha.get(listafechas.get(listafechas.size()-1)), Toast.LENGTH_LONG).show();
         Toast.makeText(getApplicationContext(),
                 "Dialga shiny: " + listafechas.get(listafechas.size()-1), Toast.LENGTH_LONG).show();
 */
 
-
-    }
-
         cursor.close();
         dbHelper.close();
-}}
+    }
+
+
+}

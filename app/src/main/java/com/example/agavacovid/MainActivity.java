@@ -1,5 +1,6 @@
 package com.example.agavacovid;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private MulticastListenerThread multicastListenerThread;
     private boolean isListening = false;
     private WifiManager.MulticastLock wifiLock;
-    private List<String> ListaHashes;
+    private List<String> listaHashes;
+    private static int estado = 0;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -119,16 +121,15 @@ public class MainActivity extends AppCompatActivity {
         values.put(AgavaContract.IdsPropios.FECHA_GEN, "2021-05-26 17:30:00");
         db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
 
+        values.clear();
+        values.put(AgavaContract.IdsAjenos.ID_EF, "ae19d48d6b2d7e053fd7a6580a1511bf5f91e6f27c0cb6872ed3cf999f64fae3");
+        values.put(AgavaContract.IdsAjenos.FECHA_REC, "2021-05-26 17:30:00");
+        db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
+
         dbHelper.close();
 
-        ListaHashes = new ArrayList<>();
+        listaHashes = new ArrayList<>();
 
-        /*
-        values.clear();
-        values.put(AgavaContract.IdsPropios.ID_EF, "1234561112411");
-        values.put(AgavaContract.IdsAjenos.FECHA_REC, new Date().toString());
-        db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
-*/
 
         if (this.isListening) {
             stopListening();
@@ -142,28 +143,8 @@ public class MainActivity extends AppCompatActivity {
         if(!bluetoothAdapter.isEnabled()){
 
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //enableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,60);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
-
-// es pa que cuando entres en otra actividad no se ponga a hacer discoveries ahi chungos a la vez y pete
-       // if (bluetoothAdapter.isDiscovering()) {
-        ///    bluetoothAdapter.cancelDiscovery();
-        //}
-
-        //bluetoothAdapter.startDiscovery();
-
-
-
-        //IntentFilter filter = new IntentFilter();
-
-        //filter.addAction(BluetoothDevice.ACTION_FOUND);
-        //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        //filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-        //registerReceiver(mReceiver, filter);
-
-        // Ver junticos de la mano con gente extranya de la Passion y tasar las cartas de PTCG de Gava
 
     }
 
@@ -227,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @SuppressLint("NewApi")
     public void comprobarHash(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         String[] arrSplit = message.split(",");
@@ -242,10 +223,18 @@ public class MainActivity extends AppCompatActivity {
         for (byte byt : hash) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
         String hashString = result.toString();
         Toast.makeText(getApplicationContext(), hashString, Toast.LENGTH_SHORT).show();
-
+        listaHashes.add(hashString);
+        if(comprobarIDsContagiados()){
+            //Toast.makeText(getApplicationContext(), "Agarrate las bragas marichocho", Toast.LENGTH_SHORT).show();
+            if(estado !=2){
+                estado = 1;
+            }
+        } else {
+            //Toast.makeText(getApplicationContext(), "Agarraos a las trenzas", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public boolean comprobarIDsContagiados(List<String> listaIDs){
+    public boolean comprobarIDsContagiados(){
         // crear la lista de IDs separando usando unas comas o algo bonico. Tambien puede ser "aga"
         db= dbHelper.getReadableDatabase();
         String[] projection = {
@@ -264,8 +253,16 @@ public class MainActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        return !Collections.disjoint(listaIDs, listaIdsAjenosBD); //true si hay interseccion, false sino
+        return !Collections.disjoint(listaHashes, listaIdsAjenosBD); //true si hay interseccion, false sino
 
+    }
+
+    public static int getEstado(){
+        return estado;
+    }
+
+    public static void setEstado(int estado){
+        MainActivity.estado = estado;
     }
 
 }

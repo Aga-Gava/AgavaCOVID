@@ -1,5 +1,6 @@
 package com.example.agavacovid;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Handler;
 
@@ -12,6 +13,7 @@ public class MulticastListenerThread extends MulticastThread {
         super("MulticastListenerThread", activity, multicastIP, multicastPort, new Handler());
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void run() {
         super.run();

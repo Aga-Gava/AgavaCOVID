@@ -155,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
         stopListening();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
+    }
+
     private void startListening() {
         if (!isListening) {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -210,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     public void comprobarHash(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         String[] arrSplit = message.split(",");
         MessageDigest digest = null;
         try {
@@ -222,12 +228,13 @@ public class MainActivity extends AppCompatActivity {
         byte[] hash = digest.digest(arrSplit[0].getBytes());
         for (byte byt : hash) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
         String hashString = result.toString();
-        Toast.makeText(getApplicationContext(), hashString, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), hashString, Toast.LENGTH_SHORT).show();
         listaHashes.add(hashString);
         if(comprobarIDsContagiados()){
             //Toast.makeText(getApplicationContext(), "Agarrate las bragas marichocho", Toast.LENGTH_SHORT).show();
-            if(estado !=2){
+            if(estado == 0){
                 estado = 1;
+                recreate();
             }
         } else {
             //Toast.makeText(getApplicationContext(), "Agarraos a las trenzas", Toast.LENGTH_SHORT).show();

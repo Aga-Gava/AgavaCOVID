@@ -9,27 +9,12 @@ import android.widget.Toast;
 import com.example.agavacovid.persistence.AgavaContract;
 import com.example.agavacovid.persistence.DbHelper;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -113,12 +98,16 @@ public class AgavaClient extends AgavaSocket {
             }
             cursor.close();
             String mensaje = stringBuilder.toString();
+            Toast.makeText(context,
+                    "Cacnea salvanos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,
+                    "WUUU" + Encriptado.encriptar(mensaje, "cacnea"), Toast.LENGTH_SHORT).show();
             //Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show();
-            salidaServidor.writeUTF(Encriptado.encrypt(mensaje));
+            salidaServidor.writeUTF(Encriptado.encriptar(mensaje, "cacnea"));
+
+
             MainActivity.setEstado(2);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Seleccione un idioma"
+        android:text="@string/seleccioneidioma"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="36sp"
@@ -132,7 +132,7 @@
         android:layout_height="75dp"
         android:layout_gravity="center"
         android:elevation="20dp"
-        android:text="Aceptar"
+        android:text="@string/idiomaaceptar"
         android:textColor="@color/black"
         android:textSize="24sp" />
 

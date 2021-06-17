@@ -1,20 +1,20 @@
 <resources>
     <string name="app_name">Agava COVID</string>
-    <string name="title_principal">Principal</string>
-    <string name="title_info">Información</string>
-    <string name="title_ajustes">Ajustes de Idioma</string>
-    <string name="button_send">Enviar diagnóstico</string>
+    <string name="title_principal">Main</string>
+    <string name="title_info">Information</string>
+    <string name="title_ajustes">Language Settings</string>
+    <string name="button_send">Send diagnostic</string>
     <string name="button_aceptar">Accept</string>
     <string name="button_cancelar">Cancel</string>
-    <string name="info_presentacion">"AgavaCovid es una app de rastreo de contactos. Su objetivo principal es permitir a sus usuarios  poder conocer de forma rápida y sencilla si han podido tener un contacto con algún enfermo.
-        \nDesde AgavaCOVID le garantizamos que sus datos serán tratados de forma apropiada y consecuente con nuestro comprosmiso con la privacidad del usuario.
-        \nAgradecemos que haga uso de nuestra herramienta y por supuesto cuídese y cuide a los demás."</string>
-    <string name="title_presentacion">¿Quiénes somos?</string>
-    <string name="title_politica">\nPolítica de privacidad</string>
-    <string name="politica">baljlrhkrhkdvgakgikg</string>
+    <string name="info_presentacion">"AgavaCovid is a contact tracing app. The main purpose of this project is allowing our users to know easy and quick if they have been in contact with a someone diseased.
+        \nAgavaCOVID guarantees that your data will be used apropiated and consequently with our privacy policy.
+        \nWe appreciate that you choose us. Be safe and care about everyone else."</string>
+    <string name="title_presentacion">Who we are</string>
+    <string name="title_politica">\nPrivacy Policy</string>
+    <string name="politica">----</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_envio">Comunica tu positivo</string>
-    <string name="hint_fecha">Seleccione una fecha</string>
+    <string name="title_envio">Send your positive</string>
+    <string name="hint_fecha">Pick a date</string>
     <string name="spanish">Español</string>
     <string name="english">English</string>
     <string name="french">Français</string>
@@ -22,34 +22,36 @@
     <string name="italian">Italiano</string>
     <string name="german">Deutsch</string>
     <string name="russian">Русский</string>
-    <string name="title_envio_fecha">Fecha de inicio de síntomas</string>
-    <string name="title_envio_fecha_info">"Introduzca la fecha de inicio de síntomas. si no has tenido síntomas, introduce la fecha de toma de muestra para el diagnóstico.
-        \nSi no conoces ninguna de estas dos fechas, déjalo en blanco."</string>
-    <string name="title_envio_codigo">Código de diagnóstico</string>
-    <string name="title_envio_codigo_info">Introduzca el código de diagnóstico que se le haya proporcionado.</string>
-    <string name="hint_codigo">Introduzca el código</string>
-    <string name="dialog_confirmacion">¿Quiere confirmar el envío de su diagnóstico?</string>
-    <string name="consejo1verde">- Cúbrete la boca y la nariz con una mascarilla.</string>
-    <string name="consejo2verde">- Mantén la distancia social.</string>
-    <string name="consejo3verde">- Utiliza gel hidroalcohólico cuando sea necesario.</string>
-    <string name="mensajeverde">Estás bien sanote síiii :3</string>
-    <string name="consejo1amarillo">- Procura salir solo para lo imprescindible.</string>
-    <string name="consejo2amarillo">- Vigila el posible desarrollo de sintomas.</string>
-    <string name="consejo3amarillo">- Comunica a tu centro salud tu estado.</string>
-    <string name="mensajeamarillo">Escóndete en casitaaaa :0</string>
-    <string name="consejo1rojo">- Aíslate lo máximo posible</string>
-    <string name="consejo2rojo">- Vigila la evolución de tus síntomas</string>
-    <string name="consejo3rojo">- Llama a tu médico si empeoras</string>
-    <string name="mensajerojo">Cuídate, te amamos chiii :D</string>
+    <string name="title_envio_fecha">Symptom onset date</string>
+    <string name="title_envio_fecha_info">"Introduce your symptom onset date. If you did not have symptoms, introduce date of sampling for diagnostic.
+        \nIf you don't know any of these dates, leave it empty."</string>
+    <string name="title_envio_codigo">Diagnostic code</string>
+    <string name="title_envio_codigo_info">Introduce your diagnostic code.</string>
+    <string name="hint_codigo">Introduce your code.</string>
+    <string name="dialog_confirmacion">Are you sure that your code is correct?</string>
+    <string name="consejo1verde">- Cover your nose and mouth with a mask.</string>
+    <string name="consejo2verde">- Keep social distance.</string>
+    <string name="consejo3verde">- Use hydroalcoholic gel if necessary.</string>
+    <string name="mensajeverde">----</string>
+    <string name="consejo1amarillo">- Try to go out only for the essentials.</string>
+    <string name="consejo2amarillo">- Keep an eye on symptoms development.</string>
+    <string name="consejo3amarillo">- Report to your health center your state.</string>
+    <string name="mensajeamarillo">----</string>
+    <string name="consejo1rojo">- Isolate yourself.</string>
+    <string name="consejo2rojo">- Keep an eye on your symptoms development</string>
+    <string name="consejo3rojo">- Call your doctor if your start getting worse.</string>
+    <string name="mensajerojo">----</string>
 
-    <string name="sincontactos">Sin contactos de riesgo identificados</string>
-    <string name="concontactos">Con contactos de riesgo identificados</string>
-    <string name="contagiado">Contagiado</string>
+    <string name="sincontactos">No contacts detected.</string>
+    <string name="concontactos">Risk contacts detected.</string>
+    <string name="contagiado">Infected</string>
 
-    <string name="sincontactosplus">Te informaremos en caso de un posible contacto</string>
-    <string name="concontactosplus">Ten cuidadín</string>
-    <string name="contagiadoplus">Quédate quieto parao</string>
+    <string name="sincontactosplus">We will notify any posible contact</string>
+    <string name="concontactosplus">You have an infected contact</string>
+    <string name="contagiadoplus">You are infected</string>
 
-    <string name="comunica">Comunica tu positivo</string>
+    <string name="comunica">Send your positive</string>
+    <string name="seleccioneidioma">Select language</string>
+    <string name="idiomaaceptar">ACCEPT</string>
 
 </resources>

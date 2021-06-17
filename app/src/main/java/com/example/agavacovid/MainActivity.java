@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
         db.insert(AgavaContract.IDS_PROPIOS_TABLA, null, values);
 
         values.clear();
-        values.put(AgavaContract.IdsAjenos.ID_EF, "ae19d48d6b2d7e053fd7a6580a1511bf5f91e6f27c0cb6872ed3cf999f64fae3");
-        values.put(AgavaContract.IdsAjenos.FECHA_REC, "2021-05-26 17:30:00");
+        values.put(AgavaContract.IdsAjenos.ID_EF, "8a19a2c9bd2408ab43862183bea9e3b1601b4f87a1d81162d2bd6618a4104db7");
+        values.put(AgavaContract.IdsAjenos.FECHA_REC, "2021-06-16 17:30:00");
         db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
 
         dbHelper.close();

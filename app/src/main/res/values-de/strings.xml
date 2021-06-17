@@ -11,7 +11,7 @@
         \nAgradecemos que haga uso de nuestra herramienta y por supuesto cuídese y cuide a los demás."</string>
     <string name="title_presentacion">¿Quiénes somos?</string>
     <string name="title_politica">\nPolítica de privacidad</string>
-    <string name="politica">baljlrhkrhkdvgakgikg</string>
+    <string name="politica">----</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_envio">Comunica tu positivo</string>
     <string name="hint_fecha">Seleccione una fecha</string>
@@ -32,24 +32,26 @@
     <string name="consejo1verde">- Cúbrete la boca y la nariz con una mascarilla.</string>
     <string name="consejo2verde">- Mantén la distancia social.</string>
     <string name="consejo3verde">- Utiliza gel hidroalcohólico cuando sea necesario.</string>
-    <string name="mensajeverde">Estás bien sanote síiii :3</string>
+    <string name="mensajeverde">----</string>
     <string name="consejo1amarillo">- Procura salir solo para lo imprescindible.</string>
     <string name="consejo2amarillo">- Vigila el posible desarrollo de sintomas.</string>
     <string name="consejo3amarillo">- Comunica a tu centro salud tu estado.</string>
-    <string name="mensajeamarillo">Escóndete en casitaaaa :0</string>
+    <string name="mensajeamarillo">----</string>
     <string name="consejo1rojo">- Aíslate lo máximo posible</string>
     <string name="consejo2rojo">- Vigila la evolución de tus síntomas</string>
     <string name="consejo3rojo">- Llama a tu médico si empeoras</string>
-    <string name="mensajerojo">Cuídate, te amamos chiii :D</string>
+    <string name="mensajerojo">----</string>
 
     <string name="sincontactos">Sin contactos de riesgo identificados</string>
     <string name="concontactos">Con contactos de riesgo identificados</string>
     <string name="contagiado">Contagiado</string>
 
     <string name="sincontactosplus">Te informaremos en caso de un posible contacto</string>
-    <string name="concontactosplus">Ten cuidadín</string>
-    <string name="contagiadoplus">Quédate quieto parao</string>
+    <string name="concontactosplus">Tienes un contacto contagiado</string>
+    <string name="contagiadoplus">Estás contagiado</string>
 
     <string name="comunica">Comunica tu positivo</string>
+    <string name="seleccioneidioma">Seleccione un idioma</string>
+    <string name="idiomaaceptar">ACEPTAR</string>
 
 </resources>

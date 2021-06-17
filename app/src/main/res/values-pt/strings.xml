@@ -11,7 +11,7 @@
         \nAgradecemos que haga uso de nuestra herramienta y por supuesto cuídese y cuide a los demás."</string>
     <string name="title_presentacion">¿Quiénes somos?</string>
     <string name="title_politica">\nPolítica de privacidad</string>
-    <string name="politica">baljlrhkrhkdvgakgikg</string>
+    <string name="politica">----</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_envio">Comunica tu positivo</string>
     <string name="hint_fecha">Seleccione una fecha</string>
@@ -51,5 +51,7 @@
     <string name="contagiadoplus">Quédate quieto parao</string>
 
     <string name="comunica">Comunica tu positivo</string>
+    <string name="seleccioneidioma">Seleccione un idioma</string>
+    <string name="idiomaaceptar">ACEPTAR</string>
 
 </resources>

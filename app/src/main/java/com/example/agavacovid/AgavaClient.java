@@ -98,10 +98,10 @@ public class AgavaClient extends AgavaSocket {
             }
             cursor.close();
             String mensaje = stringBuilder.toString();
-            Toast.makeText(context,
-                    "Cacnea salvanos", Toast.LENGTH_SHORT).show();
-            Toast.makeText(context,
-                    "WUUU" + Encriptado.encriptar(mensaje, "cacnea"), Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(context,
+            //        "Cacnea salvanos", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(context,
+          //          "WUUU" + Encriptado.encriptar(mensaje, "cacnea"), Toast.LENGTH_SHORT).show();
             //Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show();
             salidaServidor.writeUTF(Encriptado.encriptar(mensaje, "cacnea"));
 
@@ -122,6 +122,6 @@ public class AgavaClient extends AgavaSocket {
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         }
-        cs.close(); //SI FALLA LO DEL GRUPO
+        //cs.close(); //SI FALLA LO DEL GRUPO
     }
 }

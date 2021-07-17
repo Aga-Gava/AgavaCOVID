@@ -6,7 +6,10 @@ import android.os.Handler;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class MulticastListenerThread extends MulticastThread {
 
     public MulticastListenerThread(MainActivity activity, String multicastIP, int multicastPort) {

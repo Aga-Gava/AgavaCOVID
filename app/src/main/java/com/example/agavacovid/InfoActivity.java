@@ -29,7 +29,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class InfoActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
@@ -52,12 +55,11 @@ public class InfoActivity extends AppCompatActivity {
         if(!bluetoothAdapter.isEnabled()){
 
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,130);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
         }
 
         Bundle b = getIntent().getExtras();
-        int estado = 0; // or other values
+        int estado = 0;
         if(b != null)
             estado = b.getInt("estado");
 
@@ -101,13 +103,6 @@ public class InfoActivity extends AppCompatActivity {
         };
 
 
-
-        /*String[] projection = {
-                BaseColumns._ID,
-                AgavaContract.IdsPropios.ID_EF,
-                AgavaContract.IdsPropios.CLAVE_GEN,
-                AgavaContract.IdsPropios.FECHA_GEN,
-        };*/
         Cursor cursor = db.query(
                 AgavaContract.IDS_AJENOS_TABLA,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
@@ -124,8 +119,7 @@ public class InfoActivity extends AppCompatActivity {
                     cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.ID_EF));
             String fecharec = cursor.getString(
                     cursor.getColumnIndexOrThrow(AgavaContract.IdsAjenos.FECHA_REC));
-            //Toast.makeText(getApplicationContext(),
-             //       "Dialga shiny: " + idEf + " "+ clavegen +" " + fechagen, Toast.LENGTH_LONG).show();
+
            Calendar c= Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //2021-05-26 17:00:00
 
@@ -146,14 +140,8 @@ public class InfoActivity extends AppCompatActivity {
         Collections.sort(listafechas, new Comparator<Date>() {
             public int compare(Date o1, Date o2) {
                 return o1.compareTo(o2);
-            } //esta ordenada parriba o pabajo? :D
+            }
         });
-
-  /*      Toast.makeText(getApplicationContext(),
-                "Cacnea shiny: " + idsfecha.get(listafechas.get(listafechas.size()-1)), Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(),
-                "Dialga shiny: " + listafechas.get(listafechas.size()-1), Toast.LENGTH_LONG).show();
-*/
 
         cursor.close();
         dbHelper.close();

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ui.dashboard.DashboardFragment">
+    tools:context=".ui.information.InfoFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                 android:layout_width="270dp"
                 android:layout_height="186dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/titulo" />
+                app:srcCompat="@drawable/privacidad" />
 
 
             <TextView

@@ -1,16 +1,19 @@
-package com.example.agavacovid.ui.dashboard;
+package com.example.agavacovid.ui.principal;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-public class DashboardViewModel extends ViewModel {
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
+public class PrincipalViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public PrincipalViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is home fragment");
     }
 
     public LiveData<String> getText() {

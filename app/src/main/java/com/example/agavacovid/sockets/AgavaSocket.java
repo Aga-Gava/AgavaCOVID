@@ -1,4 +1,4 @@
-package com.example.agavacovid;
+package com.example.agavacovid.sockets;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -6,12 +6,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author Juan
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
  */
 public class AgavaSocket {
     private final int PUERTO = 3384; //Puerto para la conexión
-    private final String HOST = "192.168.1.41"; //Host para la conexión ""
+    private final String HOST = "192.168.1.14"; //Host para la conexión ""
     protected String mensajeServidor; //Mensajes entrantes (recibidos) en el servidor
     protected ServerSocket ss; //Socket del servidor
     protected Socket cs; //Socket del cliente
@@ -27,8 +27,5 @@ public class AgavaSocket {
             cs = new Socket(HOST, PUERTO); //Socket para el cliente en localhost en puerto 3384
 
         }
-
-
-
     }
 }

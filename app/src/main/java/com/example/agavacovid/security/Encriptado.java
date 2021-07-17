@@ -1,15 +1,5 @@
-package com.example.agavacovid;
+package com.example.agavacovid.security;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author agapo
- */
 
 
 import android.annotation.SuppressLint;
@@ -29,18 +19,12 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- *
- * @author david
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
  */
 public class Encriptado{
 
-    /**
-     * Crea la clave de encriptacion usada internamente
-     * @param clave Clave que se usara para encriptar
-     * @return Clave de encriptacion
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
+
     private static SecretKeySpec crearClave(String clave) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         byte[] claveEncriptacion = clave.getBytes("UTF-8");
 
@@ -54,18 +38,7 @@ public class Encriptado{
         return secretKey;
     }
 
-    /**
-     * Aplica la encriptacion AES a la cadena de texto usando la clave indicada
-     * @param datos Cadena a encriptar
-     * @param claveSecreta Clave para encriptar
-     * @return Información encriptada
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeyException
-     * @throws NoSuchPaddingException
-     * @throws IllegalBlockSizeException
-     * @throws BadPaddingException
-     */
+
     @SuppressLint("NewApi")
     public static String encriptar(String datos, String claveSecreta) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
 
@@ -87,18 +60,7 @@ public class Encriptado{
 
     }
 
-    /**
-     * Desencripta la cadena de texto indicada usando la clave de encriptacion
-     * @param datosEncriptados Datos encriptados
-     * @param claveSecreta Clave de encriptacion
-     * @return Informacion desencriptada
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeyException
-     * @throws NoSuchPaddingException
-     * @throws IllegalBlockSizeException
-     * @throws BadPaddingException
-     */
+
     @SuppressLint("NewApi")
     public static String desencriptar(String datosEncriptados, String claveSecreta) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
         SecretKeySpec secretKey = Encriptado.crearClave(claveSecreta);

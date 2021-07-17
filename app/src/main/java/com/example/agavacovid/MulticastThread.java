@@ -12,6 +12,10 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class MulticastThread extends Thread {
 
     private Boolean running = new Boolean(true);

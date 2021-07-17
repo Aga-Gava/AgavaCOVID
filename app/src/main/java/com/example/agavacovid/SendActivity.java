@@ -24,6 +24,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class SendActivity extends AppCompatActivity  {
 
     private View vistaEnvio;
@@ -87,11 +91,11 @@ public class SendActivity extends AppCompatActivity  {
 
                 if(code.getText().equals("")){
                     Toast.makeText(getApplicationContext(),
-                            "Debes introducir el código de diagnóstico. ", Toast.LENGTH_LONG).show();
+                            getString(R.string.mensaje_vacio), Toast.LENGTH_LONG).show();
                 }else {
                     if (code.getText().length() < 12) {
                         Toast.makeText(getApplicationContext(),
-                                "Código de diagnóstico incompleto. ", Toast.LENGTH_LONG).show();
+                                getString(R.string.mensaje_incompleto), Toast.LENGTH_LONG).show();
                     } else {
                         if(fecha.getText() ==null){
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

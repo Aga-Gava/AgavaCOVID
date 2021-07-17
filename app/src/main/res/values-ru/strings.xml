@@ -53,5 +53,13 @@
     <string name="comunica">Comunica tu positivo</string>
     <string name="seleccioneidioma">Seleccione un idioma</string>
     <string name="idiomaaceptar">ACEPTAR</string>
+    <string name="mensaje_incompleto">Código de diagnóstico incompleto</string>
+    <string name="mensaje_vacio">Debes introducir el código de diagnóstico</string>
+    <string name="error_wifi">Error: ¡No estás conectado a una red WiFi!</string>
+    <string name="escuchando">Escuchando</string>
+    <string name="conectado">Conectado</string>
+    <string name="conectando">Conectando</string>
+    <string name="conexion_fallida">Conexión fallida</string>
+    <string name="mensaje_recibido">Mensaje recibido: </string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.agavacovid;
+package com.example.agavacovid.bluetooth;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
@@ -25,7 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class SendReceive extends Thread
 {
     private final BluetoothSocket bluetoothSocket;
@@ -77,7 +80,7 @@ public class SendReceive extends Thread
                 String fecha_rec_format = sdf.format(fecha_rec);
                 String tempMsg=new String(buffer,0, bytes);
 
-                //Toast.makeText(context,tempMsg, Toast.LENGTH_LONG).show();
+
 
                 DbHelper dbHelper = new DbHelper(context);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -89,13 +92,13 @@ public class SendReceive extends Thread
 
                 db.insert(AgavaContract.IDS_AJENOS_TABLA, null, values);
 
-                //Toast.makeText(context, "Has recibido un id. Tabla id = " + newRowId + "DirBlue = " + bluetoothSocket.getRemoteDevice().getAddress(), Toast.LENGTH_LONG).show();
+
 
 
                 //CREAR LA QUERY CON LOS DATOS RECIBIDOS E INSERTAR
             } catch (IOException e) {
                 e.printStackTrace();
-               // Toast.makeText(context, "Error en el sendreceive bien feo", Toast.LENGTH_LONG).show();
+
 
             }
         }
@@ -104,7 +107,7 @@ public class SendReceive extends Thread
     public void write(byte[] bytes)
     {
         try {
-            // ACCESO A BASE DE DATOS Y PASAMOS UNICAMNETE LOS DATOS. LA CONSULTA SE CREA AL RECIBIR
+
             DbHelper dbHelper = new DbHelper(context);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -115,7 +118,7 @@ public class SendReceive extends Thread
                     AgavaContract.IdsPropios.FECHA_GEN,
             };
 
-            // Filter results WHERE "title" = 'My Title'
+
 
             Cursor cursor = db.query(
                     AgavaContract.IDS_PROPIOS_TABLA,   // The table to query
@@ -134,7 +137,7 @@ public class SendReceive extends Thread
                 String fechagen = cursor.getString(
                         cursor.getColumnIndexOrThrow(AgavaContract.IdsPropios.FECHA_GEN));
                 Calendar c= Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //Wed May 26 17:00:00 GMT+02:00 2021
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 c.setTime(sdf.parse(fechagen));
                 idsfecha.put(c.getTime(), idEf);
             }
@@ -142,16 +145,15 @@ public class SendReceive extends Thread
             for(Date d: idsfecha.keySet()){
                 listafechas.add(d);
             }
-            //listafechas.sort((d1,d2) -> d1.compareTo(d2));
+
             Collections.sort(listafechas, new Comparator<Date>() {
                 public int compare(Date o1, Date o2) {
                     return o1.compareTo(o2);
-                } //esta ordenada parriba o pabajo? :D
+                }
             });
 
             cursor.close();
-        // Divides el dia en 96 cachos, los 96 cuartos de hora, Cada cacho lo asignas a su rango, dependiendo de en que rango caiga coges el que cae en rango y coja la cota inferior para seleccionar la fecha.
-        //Esto de arriba iwal no hace falta porque la fecha gen ya es la mayor y se van sacando los chunks cada 15 min (en el final) aunque se generen todos a las 00:00 en el array gordo
+
             outputStream.write(bytes);
         } catch (IOException e) {
             e.printStackTrace();

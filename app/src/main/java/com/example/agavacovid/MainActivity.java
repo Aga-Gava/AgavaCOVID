@@ -38,34 +38,18 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     int REQUEST_ENABLE_BLUETOOTH=1;
-    private MulticastSocket socket;
-    private InetAddress group;
     private MulticastListenerThread multicastListenerThread;
     private boolean isListening = false;
     private WifiManager.MulticastLock wifiLock;
     private List<String> listaHashes;
     private static int estado = 0;
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String action = intent.getAction();
-
-           /* if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                //discovery starts, we can show progress dialog or perform other tasks
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismis progress dialog
-            } else*/
-
-        }
-    };
-
-    //private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private DbHelper dbHelper;
     private SQLiteDatabase db;
 
@@ -73,12 +57,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setItemBackgroundResource(R.drawable.background_selector);
         this.getSupportActionBar().hide();
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
@@ -91,12 +72,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-/*
-        WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        WifiManager.MulticastLock multicastLock = wifi.createMulticastLock("multicastLock");
-        multicastLock.setReferenceCounted(true);
-        multicastLock.acquire();
-*/
         dbHelper= new DbHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -175,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     isListening = true;
 
             } else {
-                outputErrorToConsole("Error: ¡No estás conectado a una red WiFi!");
+                outputErrorToConsole(getString(R.string.error_wifi));
             }
         }
     }
@@ -216,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     public void comprobarHash(String message) {
-        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         String[] arrSplit = message.split(",");
         MessageDigest digest = null;
         try {
@@ -228,21 +202,18 @@ public class MainActivity extends AppCompatActivity {
         byte[] hash = digest.digest(arrSplit[0].getBytes());
         for (byte byt : hash) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
         String hashString = result.toString();
-        //Toast.makeText(getApplicationContext(), hashString, Toast.LENGTH_SHORT).show();
+
         listaHashes.add(hashString);
         if(comprobarIDsContagiados()){
-            //Toast.makeText(getApplicationContext(), "Agarrate las bragas marichocho", Toast.LENGTH_SHORT).show();
             if(estado == 0){
                 estado = 1;
                 recreate();
             }
-        } else {
-            //Toast.makeText(getApplicationContext(), "Agarraos a las trenzas", Toast.LENGTH_SHORT).show();
         }
     }
 
     public boolean comprobarIDsContagiados(){
-        // crear la lista de IDs separando usando unas comas o algo bonico. Tambien puede ser "aga"
+
         db= dbHelper.getReadableDatabase();
         String[] projection = {
                 BaseColumns._ID,

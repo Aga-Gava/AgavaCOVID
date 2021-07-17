@@ -1,4 +1,4 @@
-package com.example.agavacovid.ui.dashboard;
+package com.example.agavacovid.ui.information;
 
 import android.graphics.text.LineBreaker;
 import android.os.Build;
@@ -15,22 +15,25 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.agavacovid.R;
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
+public class InfoFragment extends Fragment {
 
-public class DashboardFragment extends Fragment {
-
-    private DashboardViewModel dashboardViewModel;
+    private InfoViewModel infoViewModel;
     private TextView descripcion;
     private TextView tituloPolitica;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        infoViewModel =
+                new ViewModelProvider(this).get(InfoViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         descripcion = (TextView) root.findViewById(R.id.textView4);
         tituloPolitica = (TextView) root.findViewById(R.id.textView5);
 
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        infoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 descripcion.getText().toString().replace('\n', System.lineSeparator().toCharArray()[0]);

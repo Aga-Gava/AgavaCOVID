@@ -1,20 +1,14 @@
-package com.example.agavacovid.ui.home;
+package com.example.agavacovid.ui.principal;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,33 +16,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.agavacovid.ClientBTClass;
+import com.example.agavacovid.bluetooth.ClientBTClass;
 import com.example.agavacovid.InfoActivity;
 import com.example.agavacovid.MainActivity;
-import com.example.agavacovid.MyBroadcastReceiver;
 import com.example.agavacovid.R;
 import com.example.agavacovid.SendActivity;
-import com.example.agavacovid.ServerBTClass;
+import com.example.agavacovid.bluetooth.ServerBTClass;
 
-import java.lang.reflect.Method;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
+public class PrincipalFragment extends Fragment{
 
-public class HomeFragment extends Fragment{
-
-    private HomeViewModel homeViewModel;
+    private PrincipalViewModel principalViewModel;
     private ImageButton buttonInfo;
     private ImageButton buttonEnvio;
     private TextView textButtonEnvio;
@@ -67,8 +54,8 @@ public class HomeFragment extends Fragment{
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        principalViewModel =
+                new ViewModelProvider(this).get(PrincipalViewModel.class);
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         int estado = MainActivity.getEstado(); //0 es verde, 1 es amarillo, 2 es rojo
@@ -111,25 +98,25 @@ public class HomeFragment extends Fragment{
                         {
                             case STATE_LISTENING:
                                 Toast.makeText(getContext(),
-                                        "Escuchando", Toast.LENGTH_SHORT).show();
+                                        getString(R.string.escuchando), Toast.LENGTH_SHORT).show();
                                 break;
                             case STATE_CONNECTING:
                                 Toast.makeText(getContext(),
-                                        "Conectando", Toast.LENGTH_SHORT).show();
+                                        getString(R.string.conectando), Toast.LENGTH_SHORT).show();
                                 break;
                             case STATE_CONNECTED:
                                 Toast.makeText(getContext(),
-                                        "Conectado", Toast.LENGTH_SHORT).show();
+                                        getString(R.string.conectado), Toast.LENGTH_SHORT).show();
                                 break;
                             case STATE_CONNECTION_FAILED:
                                 Toast.makeText(getContext(),
-                                        "Conexión fallida", Toast.LENGTH_SHORT).show();
+                                        getString(R.string.conexion_fallida), Toast.LENGTH_SHORT).show();
                                 break;
                             case STATE_MESSAGE_RECEIVED:
                                 byte[] readBuff= (byte[]) msg.obj;
                                 String tempMsg=new String(readBuff,0,msg.arg1);
                                 Toast.makeText(getContext(),
-                                        "Mensaje recibido: " + tempMsg, Toast.LENGTH_SHORT).show();
+                                        getString(R.string.mensaje_recibido) + tempMsg, Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return true;
@@ -189,7 +176,7 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        principalViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }

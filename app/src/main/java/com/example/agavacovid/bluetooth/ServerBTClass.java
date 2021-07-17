@@ -1,4 +1,4 @@
-package com.example.agavacovid;
+package com.example.agavacovid.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
@@ -6,11 +6,13 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.UUID;
-
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class ServerBTClass extends Thread{
     private BluetoothServerSocket serverSocket;
     private SendReceive sendReceive;

@@ -1,7 +1,6 @@
-package com.example.agavacovid;
+package com.example.agavacovid.bluetooth;
 
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.BaseColumns;
-import android.widget.Toast;
 
 import com.example.agavacovid.persistence.AgavaContract;
 import com.example.agavacovid.persistence.DbHelper;
@@ -30,7 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class ClientBTClass extends Thread {
     private BluetoothDevice device;
     private BluetoothSocket socket;
@@ -78,7 +79,6 @@ public class ClientBTClass extends Thread {
                     AgavaContract.IdsPropios.FECHA_GEN,
             };
 
-            // Filter results WHERE "title" = 'My Title'
 
             Cursor cursor = db.query(
                     AgavaContract.IDS_PROPIOS_TABLA,   // The table to query
@@ -113,11 +113,10 @@ public class ClientBTClass extends Thread {
             for(Date d: idsfecha.keySet()){
                 listafechas.add(d);
             }
-            //listafechas.sort((d1,d2) -> d1.compareTo(d2));
             Collections.sort(listafechas, new Comparator<Date>() {
                 public int compare(Date o1, Date o2) {
                     return o1.compareTo(o2);
-                } //esta ordenada parriba o pabajo? :D
+                }
             });
             OutputStream os = socket.getOutputStream();
             os.write((idsfecha.get(listafechas.get(listafechas.size()-1)).getBytes()));
@@ -126,10 +125,7 @@ public class ClientBTClass extends Thread {
             message = Message.obtain();
             message.what=STATE_MESSAGE_RECEIVED;
             handler.sendMessage(message);
-            //sendReceive = new SendReceive(socket, context, handler);
-            //sendReceive.start();
-            //sendReceive.write("CACNEA".getBytes());
-            //sendReceive.write("NOIVERN".getBytes());
+
 
 
         } catch (IOException e) {

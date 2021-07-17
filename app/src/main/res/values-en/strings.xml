@@ -53,5 +53,13 @@
     <string name="comunica">Send your positive</string>
     <string name="seleccioneidioma">Select language</string>
     <string name="idiomaaceptar">ACCEPT</string>
+    <string name="mensaje_incompleto">Diagnostic code incomplete</string>
+    <string name="mensaje_vacio">You must insert the diagnostic code</string>
+    <string name="error_wifi">Error: You must be connected to a WiFi network!</string>
+    <string name="escuchando">Listening</string>
+    <string name="conectado">Connected</string>
+    <string name="conectando">Connecting</string>
+    <string name="conexion_fallida">Connection failed</string>
+    <string name="mensaje_recibido">Message recieved: </string>
 
 </resources>

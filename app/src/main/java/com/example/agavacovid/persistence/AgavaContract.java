@@ -1,7 +1,10 @@
 package com.example.agavacovid.persistence;
 
 import android.provider.BaseColumns;
-
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
 public class AgavaContract {
     public static final String DB_NAME = "agavacovid.db";
     public static final int DB_VERSION = 1;

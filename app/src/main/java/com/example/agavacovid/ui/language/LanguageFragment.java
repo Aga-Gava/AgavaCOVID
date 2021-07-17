@@ -1,4 +1,4 @@
-package com.example.agavacovid.ui.notifications;
+package com.example.agavacovid.ui.language;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -19,10 +19,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.agavacovid.R;
 
 import java.util.Locale;
+/**
+ * @author Juan Velazquez Garcia
+ * @author Maria Ruiz Molina
+ */
+public class LanguageFragment extends Fragment {
 
-public class NotificationsFragment extends Fragment {
-
-    private NotificationsViewModel notificationsViewModel;
+    private LanguageViewModel languageViewModel;
     private RadioButton radioES;
     private RadioButton radioEN;
     private RadioButton radioFR;
@@ -36,8 +39,8 @@ public class NotificationsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        languageViewModel =
+                new ViewModelProvider(this).get(LanguageViewModel.class);
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         radioES = (RadioButton) view.findViewById(R.id.radioES);
@@ -71,7 +74,7 @@ public class NotificationsFragment extends Fragment {
 
         });
 
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        languageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
 
